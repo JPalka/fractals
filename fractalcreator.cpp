@@ -13,6 +13,13 @@ _width ( width ), _height ( height )
 	this->addZoom ( Zoom( width / 2, height / 2, 4.0 / width ) );
 }
 
+void FractalCreator::run ( std::string filename ) {
+	this->calculateIteration ();
+	this->countIterations ();
+	this->drawFractal ();
+	this->writeBitmap ( filename );
+}
+
 void FractalCreator::addZoom ( const Zoom &zoom ) {
 	_zoomList.add ( zoom );
 }
@@ -42,6 +49,10 @@ void FractalCreator::calculateIteration ( ) {
 }
 
 void FractalCreator::drawFractal ( ) {
+	RGB startColor (0, 0, 20);
+	RGB endColor ( 255, 128, 74 );
+	RGB colorDiff = endColor - startColor;
+
 	for ( int i = 0; i < _width; i++ ) {
 		for ( int j = 0; j < _height; j++ ) {
 			std::uint8_t red{0};
@@ -54,9 +65,14 @@ void FractalCreator::drawFractal ( ) {
 				for ( int i = 0; i <= iterations; i++ ) {
 					hue += static_cast<double> ( _histogram[i] ) / _totalIterations;
 				}
-//				green = pow ( 255, hue );
+
+				red = startColor._r + colorDiff._r * hue;
+				green = startColor._g + colorDiff._g * hue;
+				blue = startColor._b + colorDiff._b * hue;
+				// Less glowy
+				// green = pow ( 255, hue );
 				// More glowy fancy look
-				green = hue * 255;
+				// green = hue * 255;
 			}
 //			std::cout << red << "/" << green << "/" << blue << " ";
 			_bitmap.setPixel ( i, j, red, green, blue);
@@ -80,3 +96,5 @@ void FractalCreator::countIterations () {
 		_totalIterations += _histogram[i];
 	}
 }
+
+

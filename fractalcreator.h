@@ -5,10 +5,12 @@
 #include <memory>
 #include <cstdint>
 #include <math.h>
+
 #include "zoomlist.h"
 #include "bitmap.h"
 #include "mandelbrot.h"
 #include "zoom.h"
+#include "rgb.h"
 
 class FractalCreator
 {
@@ -20,15 +22,14 @@ class FractalCreator
 		std::unique_ptr<int[]> _fractal { nullptr };
 		Bitmap _bitmap;
 		int _totalIterations{0};
-	public:
-
-		FractalCreator ( int width, int height );
-
 		void calculateIteration ();
 		void countIterations ();
 		void drawFractal ();
 		void writeBitmap ( std::string filename );
+	public:
+		FractalCreator ( int width, int height );
 		void addZoom ( const Zoom &zoom );
+		void run ( std::string filename );
 };
 
 #endif // FRACTALCREATOR_H

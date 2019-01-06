@@ -17,4 +17,5 @@ HEADERS += \
     mandelbrot.h \
     zoom.h \
     zoomlist.h \
-    fractalcreator.h
+    fractalcreator.h \
+    rgb.h
