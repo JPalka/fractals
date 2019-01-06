@@ -1,6 +1,7 @@
 #include <iostream>
 #include <cstdint>
 #include <memory>
+#include <math.h>
 #include "bitmap.h"
 #include "mandelbrot.h"
 #include <vector>
@@ -50,26 +51,27 @@ int main() {
 	}
 	for ( int i = 0; i < WIDTH; i++ ) {
 		for ( int j = 0; j < HEIGHT; j++ ) {
-			int iterations = fractal[j * WIDTH + i];
-
-			std::uint8_t color = static_cast<std::uint8_t> ( 256 * static_cast<double> ( iterations ) / Mandelbrot::MAX_ITERATIONS );
-			double hue = 0;
-			for ( int i = 0; i <= iterations; i++ ) {
-				hue += static_cast<double> ( histogram[i] ) / total;
-			}
 			std::uint8_t red{0};
 			std::uint8_t green{0};
 			std::uint8_t blue{0};
+			int iterations = fractal[j * WIDTH + i];
+			if ( iterations != Mandelbrot::MAX_ITERATIONS ) {
+//			std::uint8_t color = static_cast<std::uint8_t> ( 256 * static_cast<double> ( iterations ) / Mandelbrot::MAX_ITERATIONS );
+				double hue = 0;
+				for ( int i = 0; i <= iterations; i++ ) {
+					hue += static_cast<double> ( histogram[i] ) / total;
+				}
 
-			green = hue * 255;
+				green = pow ( 255, hue );
+			}
 
 			bitmap.setPixel ( i, j, red, green, blue);
-			if ( color < min ) {
-				min = color;
-			}
-			if ( color > max ) {
-				max = color;
-			}
+//			if ( color < min ) {
+//				min = color;
+//			}
+//			if ( color > max ) {
+//				max = color;
+//			}
 		}
 	}
 
