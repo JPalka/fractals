@@ -5,8 +5,7 @@
 #include <cstdint>
 #include <memory>
 
-class Bitmap
-{
+class Bitmap {
 	private:
 		int _width{0};
 		int _height{0};

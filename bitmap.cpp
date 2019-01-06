@@ -39,5 +39,4 @@ void Bitmap::setPixel ( int x, int y, std::uint8_t red, std::uint8_t green, std:
 	pPixel[0] = blue;
 	pPixel[1] = green;
 	pPixel[2] = red; //Reverse because Bitmap is little endian format
-
 }

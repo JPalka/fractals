@@ -5,9 +5,11 @@ CONFIG -= qt
 QMAKE_CXXFLAGS += -std=c++11 -Wall
 QMAKE_CXXFLAGS_DEBUG += -std=c++11 -Wall
 SOURCES += main.cpp \
-    bitmap.cpp
+    bitmap.cpp \
+    mandelbrot.cpp
 
 HEADERS += \
     bitmapfileheader.h \
     bitmapinfoheader.h \
-    bitmap.h
+    bitmap.h \
+    mandelbrot.h
