@@ -6,10 +6,13 @@ QMAKE_CXXFLAGS += -std=c++11 -Wall
 QMAKE_CXXFLAGS_DEBUG += -std=c++11 -Wall
 SOURCES += main.cpp \
     bitmap.cpp \
-    mandelbrot.cpp
+    mandelbrot.cpp \
+    zoomlist.cpp
 
 HEADERS += \
     bitmapfileheader.h \
     bitmapinfoheader.h \
     bitmap.h \
-    mandelbrot.h
+    mandelbrot.h \
+    zoom.h \
+    zoomlist.h

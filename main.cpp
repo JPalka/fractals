@@ -4,6 +4,7 @@
 #include <math.h>
 #include "bitmap.h"
 #include "mandelbrot.h"
+#include "zoomlist.h"
 #include <vector>
 
 using namespace std;
@@ -17,6 +18,11 @@ int main() {
 	double min = 99999999;
 	double max = -99999999;
 
+	ZoomList zoomList ( WIDTH, HEIGHT );
+	zoomList.add( Zoom( WIDTH / 2, HEIGHT / 2, 4.0 / WIDTH ) );
+	zoomList.add( Zoom( 295, HEIGHT - 202, 0.1 ) );
+	zoomList.add( Zoom( 312, HEIGHT - 304, 0.1 ) ); // Cool
+
 	std::unique_ptr<int[]> histogram ( new int[Mandelbrot::MAX_ITERATIONS]{0} ); // Too small for last element to fit. last element is count of pixels that exceed max iterations.
 	std::unique_ptr<int[]> fractal ( new int[WIDTH * HEIGHT]{0} );
 //	std::vector<int> fractal ( WIDTH * HEIGHT, 0 );
@@ -24,9 +30,8 @@ int main() {
 //	bitmap.setPixel ( WIDTH / 2, HEIGHT / 2, 255, 255, 255 );
 	for ( int i = 0; i < WIDTH; i++ ) {
 		for ( int j = 0; j < HEIGHT; j++ ) {
-			double xFractal = ( i - WIDTH / 2 - 200) * ( 2.0 / HEIGHT );
-			double yFractal = ( j - HEIGHT / 2 ) * ( 2.0 / HEIGHT );
-			int iterations = Mandelbrot::getIterations ( xFractal, yFractal );
+			pair <double, double> coords = zoomList.doZoom (i, j);
+			int iterations = Mandelbrot::getIterations ( coords.first, coords.second );
 			fractal[j * WIDTH + i] = iterations;
 			if ( iterations != Mandelbrot::MAX_ITERATIONS ) {
 				histogram[iterations]++;
