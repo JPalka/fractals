@@ -7,7 +7,8 @@ QMAKE_CXXFLAGS_DEBUG += -std=c++11 -Wall
 SOURCES += main.cpp \
     bitmap.cpp \
     mandelbrot.cpp \
-    zoomlist.cpp
+    zoomlist.cpp \
+    fractalcreator.cpp
 
 HEADERS += \
     bitmapfileheader.h \
@@ -15,4 +16,5 @@ HEADERS += \
     bitmap.h \
     mandelbrot.h \
     zoom.h \
-    zoomlist.h
+    zoomlist.h \
+    fractalcreator.h
