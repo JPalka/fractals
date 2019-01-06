@@ -22,13 +22,9 @@ bool Bitmap::write ( std::string filename ) {
 		std::cout << "Cannot create/open file";
 		return false;
 	}
-
 	file.write ( reinterpret_cast<char *> ( &fileHeader ), sizeof ( fileHeader ) );
 	file.write ( reinterpret_cast<char *> ( &infoHeader ), sizeof ( infoHeader ) );
 	file.write ( reinterpret_cast<char *> ( _pPixels.get () ), _width * _height * 3 );
-
-
-
 	file.close ();
 	if ( !file ) {
 		std::cout << "Cannot close/write to file";
@@ -38,5 +34,10 @@ bool Bitmap::write ( std::string filename ) {
 }
 
 void Bitmap::setPixel ( int x, int y, std::uint8_t red, std::uint8_t green, std::uint8_t blue ) {
+	std::uint8_t *pPixel = _pPixels.get ();
+	pPixel += ( y * 3 ) * _width + x * 3;
+	pPixel[0] = blue;
+	pPixel[1] = green;
+	pPixel[2] = red; //Reverse because Bitmap is little endian format
 
 }
