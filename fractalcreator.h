@@ -10,6 +10,7 @@
 #include "zoomlist.h"
 #include "bitmap.h"
 #include "mandelbrot.h"
+#include "tricorn.h"
 #include "zoom.h"
 #include "rgb.h"
 #include "fractal.h"
@@ -24,11 +25,11 @@ class FractalCreator
 		std::unique_ptr<int[]> _histogram { nullptr };
 		std::unique_ptr<int[]> _fractal { nullptr };
 		Bitmap _bitmap;
-		int _totalIterations{0};
+		int _totalIterations {0};
 		std::vector<int> _ranges;
 		std::vector<RGB> _colors;
 		std::vector<int> _rangeTotals;
-		bool _gotFirstRange{false};
+		bool _gotFirstRange {false};
 
 		void calculateIteration ();
 		void countIterations ();

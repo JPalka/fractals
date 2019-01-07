@@ -8,7 +8,8 @@ SOURCES += main.cpp \
     bitmap.cpp \
     mandelbrot.cpp \
     zoomlist.cpp \
-    fractalcreator.cpp
+    fractalcreator.cpp \
+    tricorn.cpp
 
 HEADERS += \
     bitmapfileheader.h \
@@ -20,5 +21,6 @@ HEADERS += \
     zoom.h \
     zoomlist.h \
     fractalcreator.h \
-    rgb.h
+    rgb.h \
+    tricorn.h
 
