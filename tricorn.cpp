@@ -18,5 +18,4 @@ int Tricorn::getIterations ( double x, double y ) {
 		iterations++;
 	}
 	return iterations;
-
 }

@@ -11,6 +11,7 @@
 #include "bitmap.h"
 #include "mandelbrot.h"
 #include "tricorn.h"
+#include "julia.h"
 #include "zoom.h"
 #include "rgb.h"
 #include "fractal.h"

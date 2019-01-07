@@ -88,7 +88,6 @@ void FractalCreator::drawFractal ( ) {
 			int rangeTotal = _rangeTotals[range];
 			int rangeStart = _ranges[range];
 
-
 			RGB &startColor = _colors[range];
 			RGB &endColor = _colors[range+1];
 			RGB colorDiff = endColor - startColor;
