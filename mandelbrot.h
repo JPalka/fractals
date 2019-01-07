@@ -1,13 +1,12 @@
 #ifndef MANDELBROT_H
 #define MANDELBROT_H
+#include "escapefractal.h"
 
-
-class Mandelbrot {
+class Mandelbrot : public EscapeFractal {
 	public:
-		static const int MAX_ITERATIONS{1000};
+		int getIterations ( double x, double y );
+		Mandelbrot( int maxIterations );
 
-		static int getIterations ( double x, double y );
-		Mandelbrot();
 };
 
 #endif // MANDELBROT_H

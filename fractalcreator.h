@@ -12,12 +12,14 @@
 #include "mandelbrot.h"
 #include "zoom.h"
 #include "rgb.h"
+#include "fractal.h"
 
 class FractalCreator
 {
 	private:
 		int _width{0};
 		int _height{0};
+		std::unique_ptr<EscapeFractal> _fractalType { nullptr };
 		ZoomList _zoomList;
 		std::unique_ptr<int[]> _histogram { nullptr };
 		std::unique_ptr<int[]> _fractal { nullptr };
@@ -28,14 +30,13 @@ class FractalCreator
 		std::vector<int> _rangeTotals;
 		bool _gotFirstRange{false};
 
-
 		void calculateIteration ();
 		void countIterations ();
 		void drawFractal ();
 		void writeBitmap ( std::string filename );
 	public:
 		int getRange ( int iterations ) const;
-		FractalCreator ( int width, int height );
+		FractalCreator ( int width, int height, EscapeFractal *fractalType );
 		void addZoom ( const Zoom &zoom );
 		void run ( std::string filename );
 		void addRange ( double rangeEnd, const RGB &rgb );

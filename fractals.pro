@@ -14,8 +14,11 @@ HEADERS += \
     bitmapfileheader.h \
     bitmapinfoheader.h \
     bitmap.h \
+    fractal.h \
+    escapefractal.h \
     mandelbrot.h \
     zoom.h \
     zoomlist.h \
     fractalcreator.h \
     rgb.h
+

@@ -1,14 +1,16 @@
 #include "fractalcreator.h"
 #include "mandelbrot.h"
+#include "escapefractal.h"
 #include <iostream>
 #include <assert.h>
 
 // TODO: Make Fractal creator create various fractals and remove madelbrot include
 
-FractalCreator::FractalCreator ( int width, int height ) :
+FractalCreator::FractalCreator ( int width, int height , EscapeFractal *fractalType ) :
 _width ( width ), _height ( height )
+, _fractalType ( fractalType )
 ,	_zoomList ( ZoomList ( width, height ) )
-, _histogram ( new int[Mandelbrot::MAX_ITERATIONS]{0} )
+, _histogram ( new int[_fractalType->_maxIterations]{0} )
 ,	_fractal ( new int[width * height]{0} )
 , _bitmap ( Bitmap ( width, height ) ) {
 	this->addZoom ( Zoom( width / 2, height / 2, 4.0 / width ) );
@@ -23,7 +25,7 @@ void FractalCreator::run ( std::string filename ) {
 }
 
 void FractalCreator::addRange (double rangeEnd , const RGB &rgb) {
-	_ranges.push_back ( rangeEnd * Mandelbrot::MAX_ITERATIONS );
+	_ranges.push_back ( rangeEnd * _fractalType->_maxIterations );
 	_colors.push_back ( rgb );
 
 	if ( _gotFirstRange ) {
@@ -34,7 +36,7 @@ void FractalCreator::addRange (double rangeEnd , const RGB &rgb) {
 
 void FractalCreator::calculateRangeTotals() {
 	int rangeIndex {0};
-	for ( int i = 0; i < Mandelbrot::MAX_ITERATIONS; i++ ) {
+	for ( int i = 0; i < _fractalType->_maxIterations; i++ ) {
 		int pixels = _histogram[i];
 		if ( i >= _ranges[rangeIndex+1] ) {
 			rangeIndex++;
@@ -51,15 +53,15 @@ void FractalCreator::addZoom ( const Zoom &zoom ) {
 }
 
 int FractalCreator::getRange ( int iterations ) const {
-	int range {0};
-	for ( int i = 1; i < _ranges.size (); i++ ) {
+	uint range {0};
+	for ( uint i = 1; i < _ranges.size (); i++ ) {
 		range = i;
 		if ( _ranges[i] > iterations ) {
 			break;
 		}
 	}
 	range--;
-	assert ( range > -1 );
+//	assert ( range > -1 );
 	assert ( range < _ranges.size () );
 	return range;
 }
@@ -68,9 +70,9 @@ void FractalCreator::calculateIteration ( ) {
 	for ( int i = 0; i < _width; i++ ) {
 		for ( int j = 0; j < _height; j++ ) {
 			std::pair <double, double> coords = _zoomList.doZoom (i, j);
-			int iterations = Mandelbrot::getIterations ( coords.first, coords.second );
+			int iterations = _fractalType->getIterations ( coords.first, coords.second );
 			_fractal[j * _width + i] = iterations;
-			if ( iterations != Mandelbrot::MAX_ITERATIONS ) {
+			if ( iterations != _fractalType->_maxIterations ) {
 				_histogram[iterations]++;
 			}
 		}
@@ -93,7 +95,7 @@ void FractalCreator::drawFractal ( ) {
 			std::uint8_t red{0};
 			std::uint8_t green{0};
 			std::uint8_t blue{0};
-			if ( iterations != Mandelbrot::MAX_ITERATIONS ) {
+			if ( iterations != _fractalType->_maxIterations ) {
 				int totalPixels = 0;
 				for ( int i = rangeStart; i <= iterations; i++ ) {
 					totalPixels += _histogram[i];
@@ -113,7 +115,7 @@ void FractalCreator::writeBitmap ( std::string filename ) {
 
 void FractalCreator::countIterations () {
 	// Counting total iterations. needed for coloring pixels.
-	for ( int i = 0; i < Mandelbrot::MAX_ITERATIONS; i++ ) {
+	for ( int i = 0; i < _fractalType->_maxIterations; i++ ) {
 		_totalIterations += _histogram[i];
 	}
 }
