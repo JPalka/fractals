@@ -92,26 +92,39 @@ void FractalCreator::calculateIteration ( ) {
 }
 
 void FractalCreator::drawFractal ( ) {
-	RGB startColor (0, 0, 0);
-	RGB endColor ( 0, 0, 255 );
-	RGB colorDiff = endColor - startColor;
+//	RGB startColor (0, 0, 0);
+//	RGB endColor ( 0, 0, 255 );
+//	RGB colorDiff = endColor - startColor;
 
 	for ( int i = 0; i < _width; i++ ) {
 		for ( int j = 0; j < _height; j++ ) {
+			int iterations = _fractal[j * _width + i];
+
+			int range = getRange ( iterations );
+			int rangeTotal = _rangeTotals[range];
+			int rangeStart = _ranges[range];
+
+
+			RGB &startColor = _colors[range];
+			RGB &endColor = _colors[range+1];
+			RGB colorDiff = endColor - startColor;
+
 			std::uint8_t red{0};
 			std::uint8_t green{0};
 			std::uint8_t blue{0};
-			int iterations = _fractal[j * _width + i];
+
 			if ( iterations != Mandelbrot::MAX_ITERATIONS ) {
 //			std::uint8_t color = static_cast<std::uint8_t> ( 256 * static_cast<double> ( iterations ) / Mandelbrot::MAX_ITERATIONS );
-				double hue = 0;
-				for ( int i = 0; i <= iterations; i++ ) {
-					hue += static_cast<double> ( _histogram[i] ) / _totalIterations;
+				int totalPixels = 0;
+//				double hue = 0;
+				for ( int i = rangeStart; i <= iterations; i++ ) {
+//					hue += static_cast<double> ( _histogram[i] ) / _totalIterations;
+					totalPixels += _histogram[i];
 				}
 
-				red = startColor._r + colorDiff._r * hue;
-				green = startColor._g + colorDiff._g * hue;
-				blue = startColor._b + colorDiff._b * hue;
+				red = startColor._r + colorDiff._r * ( static_cast<double> ( totalPixels ) / rangeTotal );
+				green = startColor._g + colorDiff._g * ( static_cast<double> ( totalPixels ) / rangeTotal );
+				blue = startColor._b + colorDiff._b * ( static_cast<double> ( totalPixels ) / rangeTotal );
 				// Less glowy
 				// green = pow ( 255, hue );
 				// More glowy fancy look
