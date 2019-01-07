@@ -14,9 +14,9 @@ int main ( int argc, char *argv[] ) {
 		name = argv[1];
 	}
 	FractalCreator fractalCreator ( WIDTH, HEIGHT );
-	fractalCreator.addRange ( 0.0, RGB ( 0, 0, 0 ) );
-	fractalCreator.addRange ( 0.3, RGB ( 255, 0, 0 ) );
-	fractalCreator.addRange ( 0.5, RGB ( 0, 255, 0 ) );
+	fractalCreator.addRange ( 0.0, RGB ( 0, 0, 255 ) );
+	fractalCreator.addRange ( 0.05, RGB ( 255, 99, 71 ) );
+	fractalCreator.addRange ( 0.08, RGB ( 255, 215, 0 ) );
 	fractalCreator.addRange ( 1.0, RGB ( 255, 255, 255 ) );
 
 	cout << fractalCreator.getRange ( 310 );

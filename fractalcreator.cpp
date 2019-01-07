@@ -30,8 +30,6 @@ void FractalCreator::addRange (double rangeEnd , const RGB &rgb) {
 		_rangeTotals.push_back ( 0 );
 	}
 	_gotFirstRange = true;
-
-
 }
 
 void FractalCreator::calculateRangeTotals() {
@@ -63,7 +61,6 @@ int FractalCreator::getRange ( int iterations ) const {
 	range--;
 	assert ( range > -1 );
 	assert ( range < _ranges.size () );
-
 	return range;
 }
 
@@ -76,26 +73,11 @@ void FractalCreator::calculateIteration ( ) {
 			if ( iterations != Mandelbrot::MAX_ITERATIONS ) {
 				_histogram[iterations]++;
 			}
-//			std::uint8_t color = static_cast<std::uint8_t> ( 256 * static_cast<double> ( iterations ) / Mandelbrot::MAX_ITERATIONS );
-
-//			color = color * color * color;
-
-//			bitmap.setPixel ( i, j, 0, color, 0);
-//			if ( color < min ) {
-//				min = color;
-//			}
-//			if ( color > max ) {
-//				max = color;
-//			}
 		}
 	}
 }
 
 void FractalCreator::drawFractal ( ) {
-//	RGB startColor (0, 0, 0);
-//	RGB endColor ( 0, 0, 255 );
-//	RGB colorDiff = endColor - startColor;
-
 	for ( int i = 0; i < _width; i++ ) {
 		for ( int j = 0; j < _height; j++ ) {
 			int iterations = _fractal[j * _width + i];
@@ -108,20 +90,14 @@ void FractalCreator::drawFractal ( ) {
 			RGB &startColor = _colors[range];
 			RGB &endColor = _colors[range+1];
 			RGB colorDiff = endColor - startColor;
-
 			std::uint8_t red{0};
 			std::uint8_t green{0};
 			std::uint8_t blue{0};
-
 			if ( iterations != Mandelbrot::MAX_ITERATIONS ) {
-//			std::uint8_t color = static_cast<std::uint8_t> ( 256 * static_cast<double> ( iterations ) / Mandelbrot::MAX_ITERATIONS );
 				int totalPixels = 0;
-//				double hue = 0;
 				for ( int i = rangeStart; i <= iterations; i++ ) {
-//					hue += static_cast<double> ( _histogram[i] ) / _totalIterations;
 					totalPixels += _histogram[i];
 				}
-
 				red = startColor._r + colorDiff._r * ( static_cast<double> ( totalPixels ) / rangeTotal );
 				green = startColor._g + colorDiff._g * ( static_cast<double> ( totalPixels ) / rangeTotal );
 				blue = startColor._b + colorDiff._b * ( static_cast<double> ( totalPixels ) / rangeTotal );
@@ -130,14 +106,7 @@ void FractalCreator::drawFractal ( ) {
 				// More glowy fancy look
 				// green = hue * 255;
 			}
-//			std::cout << red << "/" << green << "/" << blue << " ";
 			_bitmap.setPixel ( i, j, red, green, blue);
-//			if ( color < min ) {
-//				min = color;
-//			}
-//			if ( color > max ) {
-//				max = color;
-//			}
 		}
 	}
 }

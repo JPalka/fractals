@@ -16,6 +16,5 @@ int Mandelbrot::getIterations ( double x, double y ) {
 		}
 		iterations++;
 	}
-
 	return iterations;
 }
