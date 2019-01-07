@@ -1,6 +1,7 @@
 #include "fractalcreator.h"
 #include "mandelbrot.h"
 #include <iostream>
+#include <assert.h>
 
 // TODO: Make Fractal creator create various fractals and remove madelbrot include
 
@@ -14,14 +15,56 @@ _width ( width ), _height ( height )
 }
 
 void FractalCreator::run ( std::string filename ) {
-	this->calculateIteration ();
-	this->countIterations ();
-	this->drawFractal ();
-	this->writeBitmap ( filename );
+	calculateIteration ();
+	countIterations ();
+	calculateRangeTotals();
+	drawFractal ();
+	writeBitmap ( filename );
+}
+
+void FractalCreator::addRange (double rangeEnd , const RGB &rgb) {
+	_ranges.push_back ( rangeEnd * Mandelbrot::MAX_ITERATIONS );
+	_colors.push_back ( rgb );
+
+	if ( _gotFirstRange ) {
+		_rangeTotals.push_back ( 0 );
+	}
+	_gotFirstRange = true;
+
+
+}
+
+void FractalCreator::calculateRangeTotals() {
+	int rangeIndex {0};
+	for ( int i = 0; i < Mandelbrot::MAX_ITERATIONS; i++ ) {
+		int pixels = _histogram[i];
+		if ( i >= _ranges[rangeIndex+1] ) {
+			rangeIndex++;
+		}
+		_rangeTotals[rangeIndex] += pixels;
+	}
+	for ( int value: _rangeTotals ) {
+		std::cout << "Range total: " << value << std::endl;
+	}
 }
 
 void FractalCreator::addZoom ( const Zoom &zoom ) {
 	_zoomList.add ( zoom );
+}
+
+int FractalCreator::getRange ( int iterations ) const {
+	int range {0};
+	for ( int i = 1; i < _ranges.size (); i++ ) {
+		range = i;
+		if ( _ranges[i] > iterations ) {
+			break;
+		}
+	}
+	range--;
+	assert ( range > -1 );
+	assert ( range < _ranges.size () );
+
+	return range;
 }
 
 void FractalCreator::calculateIteration ( ) {
@@ -49,8 +92,8 @@ void FractalCreator::calculateIteration ( ) {
 }
 
 void FractalCreator::drawFractal ( ) {
-	RGB startColor (0, 0, 20);
-	RGB endColor ( 255, 128, 74 );
+	RGB startColor (0, 0, 0);
+	RGB endColor ( 0, 0, 255 );
 	RGB colorDiff = endColor - startColor;
 
 	for ( int i = 0; i < _width; i++ ) {

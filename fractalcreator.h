@@ -5,6 +5,7 @@
 #include <memory>
 #include <cstdint>
 #include <math.h>
+#include <vector>
 
 #include "zoomlist.h"
 #include "bitmap.h"
@@ -22,14 +23,23 @@ class FractalCreator
 		std::unique_ptr<int[]> _fractal { nullptr };
 		Bitmap _bitmap;
 		int _totalIterations{0};
+		std::vector<int> _ranges;
+		std::vector<RGB> _colors;
+		std::vector<int> _rangeTotals;
+		bool _gotFirstRange{false};
+
+
 		void calculateIteration ();
 		void countIterations ();
 		void drawFractal ();
 		void writeBitmap ( std::string filename );
 	public:
+		int getRange ( int iterations ) const;
 		FractalCreator ( int width, int height );
 		void addZoom ( const Zoom &zoom );
 		void run ( std::string filename );
+		void addRange ( double rangeEnd, const RGB &rgb );
+		void calculateRangeTotals ();
 };
 
 #endif // FRACTALCREATOR_H
