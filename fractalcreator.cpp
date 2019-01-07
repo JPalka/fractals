@@ -101,10 +101,6 @@ void FractalCreator::drawFractal ( ) {
 				red = startColor._r + colorDiff._r * ( static_cast<double> ( totalPixels ) / rangeTotal );
 				green = startColor._g + colorDiff._g * ( static_cast<double> ( totalPixels ) / rangeTotal );
 				blue = startColor._b + colorDiff._b * ( static_cast<double> ( totalPixels ) / rangeTotal );
-				// Less glowy
-				// green = pow ( 255, hue );
-				// More glowy fancy look
-				// green = hue * 255;
 			}
 			_bitmap.setPixel ( i, j, red, green, blue);
 		}

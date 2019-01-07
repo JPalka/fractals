@@ -25,12 +25,6 @@ int main ( int argc, char *argv[] ) {
 	fractalCreator.addZoom ( Zoom( 312, 304, 0.1 ) ); // Cool
 
 	fractalCreator.run ( name );
-//	Validating histogram. Total count of pixels in histogram must be equal to total count of pixels.
-//	int pixelCount {0};
-//	for ( size_t i = 0; i < Mandelbrot::MAX_ITERATIONS; i++ ) {
-//		pixelCount += histogram[i];
-//	}
-//	cout << "Pixel count is " << pixelCount << " and it should be: " << WIDTH * HEIGHT << endl;
 
 	return 0;
 }
