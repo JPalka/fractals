@@ -31,7 +31,6 @@ class FractalCreator
 		std::vector<RGB> _colors;
 		std::vector<int> _rangeTotals;
 		bool _gotFirstRange {false};
-
 		void calculateIteration ();
 		void countIterations ();
 		void drawFractal ();

@@ -6,7 +6,6 @@ class Mandelbrot : public EscapeFractal {
 	public:
 		int getIterations ( double x, double y );
 		Mandelbrot( int maxIterations );
-
 };
 
 #endif // MANDELBROT_H

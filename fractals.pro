@@ -10,7 +10,10 @@ SOURCES += main.cpp \
     zoomlist.cpp \
     fractalcreator.cpp \
     tricorn.cpp \
-    julia.cpp
+    julia.cpp \
+    histogram.cpp \
+    fractal.cpp \
+    escapefractal.cpp
 
 HEADERS += \
     bitmapfileheader.h \
@@ -24,5 +27,8 @@ HEADERS += \
     fractalcreator.h \
     rgb.h \
     tricorn.h \
-    julia.h
+    julia.h \
+    pixel.h \
+    colorscheme.h \
+    histogram.h
 
