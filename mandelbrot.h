@@ -4,8 +4,8 @@
 
 class Mandelbrot : public EscapeFractal {
 	public:
-		int getIterations ( double x, double y );
-		Mandelbrot( int maxIterations );
+		int getIterations ( double x, double y ) override;
+		Mandelbrot(int maxIterations, ColorScheme *coloringMethod );
 };
 
 #endif // MANDELBROT_H

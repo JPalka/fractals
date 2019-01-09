@@ -10,18 +10,14 @@
 
 class Histogram : public ColorScheme {
 	std::unique_ptr<int[]> _histogram;
-	std::vector<ColorRange> _colorRanges; //Ranges of colors. Range is defined as fraction of total iterations
 	int _maxIterations{0};
-	void fillHistogram (int width, int height, std::vector<Pixel> pixels);
+	RGB _color;
+	void fillHistogram (  int width, int height, std::vector<Pixel> pixels );
 	public:
-	Histogram ( uint maxIterations );
-	void color (int width, int height, std::vector<Pixel> &pixels ) override;
-	void addColorRange (ColorRange colorRange );
+	void setColor ( RGB color );
+	Histogram (uint maxIterations , RGB color);
+	void color ( int width, int height, std::vector<Pixel> &pixels ) override;
 	int countTotalIterations ();
-	protected:
-	void calculateRangeTotals ();
-	private:
-	std::vector<ColorRange>::iterator getRange( Pixel &pixel );
 };
 
 #endif // HISTOGRAM_H

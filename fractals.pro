@@ -14,7 +14,9 @@ SOURCES += main.cpp \
     histogram.cpp \
     fractal.cpp \
     escapefractal.cpp \
-    colorrange.cpp
+    colorrange.cpp \
+    newton.cpp \
+    rangebased.cpp
 
 HEADERS += \
     bitmapfileheader.h \
@@ -32,5 +34,7 @@ HEADERS += \
     pixel.h \
     colorscheme.h \
     histogram.h \
-    colorrange.h
+    colorrange.h \
+    newton.h \
+    rangebased.h
 

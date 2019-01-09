@@ -2,11 +2,10 @@
 #include <complex>
 #include <memory>
 
-Mandelbrot::Mandelbrot ( int maxIterations = 1000 ) {
+Mandelbrot::Mandelbrot ( int maxIterations, ColorScheme *coloringMethod ) {
 	_maxIterations = maxIterations;
-	// Defaultowo kolorowanie histogramem
-	_coloringMethod = std::unique_ptr<ColorScheme> ( new Histogram ( maxIterations ) );
-
+	_coloringMethod = std::unique_ptr<ColorScheme> ( coloringMethod );
+//	_coloringMethod = std::unique_ptr<ColorScheme> ( new Histogram ( maxIterations, RGB ( 255, 0, 0 ) ) );
 }
 
 int Mandelbrot::getIterations ( double x, double y ) {

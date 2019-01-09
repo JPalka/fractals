@@ -1,5 +1,7 @@
 #include "fractal.h"
 
+#include <iostream>
+
 Fractal::Fractal () : _width ( 600 )
 , _height ( 600 )
 ,	_fractal ( _width * _height, Pixel( RGB (0, 0, 0) ) )
@@ -13,13 +15,14 @@ void Fractal::addZoom ( Zoom zoom ) {
 
 void Fractal::colorFractal()
 {
+//	int i = 0;
 	_coloringMethod->color ( _width, _height, _fractal );
+	std::cout << "Finished coloring fractal\n";
 }
 
 void Fractal::save()
 {
 	_outputFile.write ( _fractalName + ".bmp", _fractal );
-
 }
 
 //Zmiana rozmiarów obrazu wymusza stworzenie od nowa wektora pikseli i listy zoomów
