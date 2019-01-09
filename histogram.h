@@ -18,7 +18,6 @@ class Histogram : public ColorScheme {
 	void color (int width, int height, std::vector<Pixel> &pixels ) override;
 	void addColorRange (ColorRange colorRange );
 	int countTotalIterations ();
-	void testRanges(int width, int height, std::vector<Pixel> &pixels);
 	protected:
 	void calculateRangeTotals ();
 	private:

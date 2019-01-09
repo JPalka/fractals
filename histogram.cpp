@@ -20,18 +20,16 @@ Histogram::Histogram ( uint maxIterations ) : _histogram ( new int[maxIterations
 	addColorRange ( ColorRange ( 0.05, RGB ( 255, 99, 71 ) ) );
 	addColorRange ( ColorRange ( 0.08, RGB ( 255, 215, 0 ) ) );
 	addColorRange ( ColorRange ( 1.0, RGB ( 255, 255, 255 ) ) );
-	//	fractalCreator.addRange ( 0.0, RGB ( 0, 0, 255 ) );
-	//	fractalCreator.addRange ( 0.05, RGB ( 255, 99, 71 ) );
-	//	fractalCreator.addRange ( 0.08, RGB ( 255, 215, 0 ) );
-	//	fractalCreator.addRange ( 1.0, RGB ( 255, 255, 255 ) );
-	assert ( _histogram[1] == 0 );
 }
 
+/* Ten rodzaj ustawiania kolorów zmienia kolory w zależności od max iteracji gdyżpo zmiana max iteracji zmienia
+ * zakresy kolorów podane jako % max iteracji. ColorRange ( 0.5, RGB() ) przy maxIterations=1000 wychodzi 500
+ * a przy maxIterations=10000 już 5000. Zmienia sie przez to ilość pixeli w zakresach a ta jest używana w
+ * obliczaniu koloru. Fix?
+ * */
 void Histogram::color ( int width, int height, std::vector<Pixel> &pixels ) {
 	fillHistogram ( width, height, pixels );
-//	int totalIterations = countTotalIterations ();
 	calculateRangeTotals ();
-//	testRanges (width, height, pixels);
 	for ( int i = 0; i < width; i++ ) {
 		for ( int j = 0; j < height; j++ ) {
 			int iterations = pixels[j * width + i]._iterations;
@@ -55,8 +53,6 @@ void Histogram::color ( int width, int height, std::vector<Pixel> &pixels ) {
 
 			RGB color = RGB ( red, green, blue );
 			pixels[j * width + i].setColor ( color );
-
-			//			_bitmap.setPixel ( i, j, red, green, blue);
 		}
 	}
 
@@ -84,23 +80,6 @@ std::vector<ColorRange>::iterator Histogram::getRange ( Pixel &pixel ) {
 		}
 	}
 	throw "Pixel doesnt fit into any range. UNACCEPTABLE";
-}
-void Histogram::testRanges ( int width, int height, std::vector<Pixel> &pixels ) {
-	//test histogram
-	int totalPixels = 0;
-	for ( int i = 1; i <= _maxIterations; i++ ) {
-		totalPixels += _histogram[i];
-	}
-	assert ( totalPixels == pixels.size () );
-
-
-	for ( int x = 0; x < width; x++ ) {
-		for ( int y = 0; y < height; y++ ) {
-			std::cout << getRange ( pixels[y * width + 1] )->getRange ()<< "\n"
-			<< getRange ( pixels[y * width + 1] )->_pixelCount;
-		}
-	}
-	std::cout << std::endl;
 }
 
 // Oblicza ile pixeli jest w zakresach kolorów

@@ -12,7 +12,7 @@ class Pixel {
 		}
 		Pixel ( const RGB &color = RGB (0, 0, 0) ) : _color ( color ) {
 
-		};
+		}
 };
 
 #endif // PIXEL_H

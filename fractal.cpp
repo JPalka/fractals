@@ -2,7 +2,7 @@
 
 Fractal::Fractal () : _width ( 600 )
 , _height ( 600 )
-,	_fractal ( _width * _height, Pixel() )
+,	_fractal ( _width * _height, Pixel( RGB (0, 0, 0) ) )
 , _outputFile ( Bitmap ( _width, _height ) ) {
 	_zoomList.add ( Zoom ( _width / 2, _height / 2, 4.0 / _width ) );
 }
