@@ -9,7 +9,7 @@ class Newton : public EscapeFractal {
 		std::complex<double> derivativeFunction ( std::complex<double> z );
 	public:
 		int getIterations ( double x, double y ) override;
-		Newton ( int maxIterations );
+		Newton ( int maxIterations, ColorScheme *coloringMethod );
 };
 
 #endif // NEWTON_H

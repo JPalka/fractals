@@ -2,9 +2,9 @@
 
 #include <vector>
 
-Newton::Newton ( int maxIterations ) {
+Newton::Newton ( int maxIterations, ColorScheme *coloringMethod ) {
 	_maxIterations = maxIterations;
-	_coloringMethod = std::unique_ptr<ColorScheme> ( new Histogram ( maxIterations, RGB ( 0, 255, 0 ) ) );
+	_coloringMethod = std::unique_ptr<ColorScheme> ( coloringMethod );
 }
 
 int Newton::getIterations ( double x, double y ) {

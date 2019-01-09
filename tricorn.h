@@ -4,7 +4,7 @@
 
 class Tricorn : public EscapeFractal {
 	public:
-		Tricorn ( int maxIterations );
+		Tricorn (int maxIterations , ColorScheme *coloringMethod);
 		int getIterations(double x, double y);
 };
 
