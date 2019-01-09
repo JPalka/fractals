@@ -3,13 +3,38 @@
 #include "bitmap.h"
 #include "bitmapinfoheader.h"
 #include "bitmapfileheader.h"
+#include "pixel.h"
 
-
-Bitmap::Bitmap ( int width, int height ) : _width(width), _height(height), _pPixels(new std::uint8_t[width*height*3]{0}) {
+Bitmap::Bitmap ( int width, int height ) : _width(width), _height(height)
+, _pPixels(new std::uint8_t[width*height*3]{0}) {
 
 } //Specify "new" behaviour to throw exceptions
 
-bool Bitmap::write ( std::string filename ) {
+void Bitmap::setDimensions ( int width, int height ) {
+	_width = width;
+	_height = height;
+	// Trzeba od nowa tablice pikseli bitmapy stworzyć;
+	_pPixels = std::unique_ptr<std::uint8_t[]> ( new std::uint8_t[_width * _height * 3] );
+}
+
+
+// TODO: poprawić to tak żeby działało z różnymi rodzajami zapisywania kolorów
+void Bitmap::convertPixels ( std::vector<Pixel> &input ) {
+	uint position = 0;
+	for ( Pixel &pixel: input ) {
+		_pPixels[position] = pixel._color._b;
+		position++;
+		_pPixels[position] = pixel._color._g;
+		position++;
+		_pPixels[position] = pixel._color._r;
+		position++;
+	}
+}
+
+bool Bitmap::write ( std::string filename, std::vector<Pixel> &pixels ) {
+
+	convertPixels ( pixels );
+
 	BitmapFileHeader fileHeader;
 	BitmapInfoHeader infoHeader;
 	fileHeader.fileSize = sizeof ( BitmapFileHeader ) + sizeof ( BitmapInfoHeader ) + _width * _height * 3;
@@ -19,6 +44,7 @@ bool Bitmap::write ( std::string filename ) {
 	std::ofstream file;
 	file.open ( filename, std::ios::out|std::ios::binary );
 	if ( !file ) {
+		throw "wysrało sie";
 		std::cout << "Cannot create/open file";
 		return false;
 	}

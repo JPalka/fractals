@@ -8,18 +8,22 @@
 using namespace std;
 
 int main ( int argc, char *argv[] ) {
-	const int WIDTH = 800;
-	const int HEIGHT = 600;
-	int maxIterations = 1000;
+//	const int WIDTH = 800;
+//	const int HEIGHT = 600;
+//	int maxIterations = 1000;
 	string name {"image.bmp"};
 	if ( argc == 2 ) {
 		name = argv[1];
 	}
-
-	Fractal *fractal = new Mandelbrot ( 1000 );
-	fractal->addZoom ( Zoom ( 200, 200, 0.3 ) );
+	Fractal *fractal = new Mandelbrot ( 10000 );
+	fractal->setDimensions ( 800, 600 );
+	fractal->addZoom ( Zoom ( 295, 202, 0.1 ) );
+	fractal->addZoom ( Zoom ( 312, 304, 0.1 ) );
 	fractal->calculateFractal ();
-
+	fractal->colorFractal ();
+	fractal->_fractalName = "MandelbrotRange10000";
+	fractal->save ();
+	delete fractal;
 //	FractalCreator fractalCreator ( WIDTH, HEIGHT, new Julia ( maxIterations ) );
 //	fractalCreator.addRange ( 0.0, RGB ( 0, 0, 255 ) );
 //	fractalCreator.addRange ( 0.05, RGB ( 255, 99, 71 ) );
@@ -31,6 +35,5 @@ int main ( int argc, char *argv[] ) {
 ////	fractalCreator.addZoom ( Zoom( 312, 304, 0.1 ) ); // Cool
 
 //	fractalCreator.run ( name );
-
 	return 0;
 }

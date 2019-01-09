@@ -5,6 +5,8 @@
 
 Julia::Julia ( int maxIterations ) {
 	_maxIterations = maxIterations;
+	// Defaultowo kolorowanie histogramem
+	_coloringMethod = std::unique_ptr<ColorScheme> ( new Histogram ( maxIterations ) );
 }
 
 int Julia::getIterations ( double x, double y ) {

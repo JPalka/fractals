@@ -19,8 +19,9 @@ class Fractal {
 		std::vector<Pixel> _fractal; // vector pixeli
 		std::unique_ptr<ColorScheme> _coloringMethod { nullptr }; // Metoda kolorowania pixeli
 		Bitmap _outputFile; // Plik wynikowy. TODO: Dodać możliwość innych typów ( jpg, png, whatever )
-		Fractal ();
+		Fractal ( );
 	public:
+		void setDimensions ( int width, int height );
 		std::string _fractalName {};
 		void addZoom ( Zoom zoom );
 		// Oblicza dane dla fractala w zależności od jego rodzaju i ustawia te dane w pikselach

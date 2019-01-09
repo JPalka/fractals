@@ -4,6 +4,8 @@
 
 Tricorn::Tricorn ( int maxIterations )  {
 	_maxIterations = maxIterations;
+	// Defaultowo kolorowanie histogramem
+	_coloringMethod = std::unique_ptr<ColorScheme> ( new Histogram ( maxIterations ) );
 }
 
 int Tricorn::getIterations ( double x, double y ) {

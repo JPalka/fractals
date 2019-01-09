@@ -13,7 +13,8 @@ SOURCES += main.cpp \
     julia.cpp \
     histogram.cpp \
     fractal.cpp \
-    escapefractal.cpp
+    escapefractal.cpp \
+    colorrange.cpp
 
 HEADERS += \
     bitmapfileheader.h \
@@ -30,5 +31,6 @@ HEADERS += \
     julia.h \
     pixel.h \
     colorscheme.h \
-    histogram.h
+    histogram.h \
+    colorrange.h
 

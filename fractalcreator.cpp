@@ -109,7 +109,8 @@ void FractalCreator::drawFractal ( ) {
 }
 
 void FractalCreator::writeBitmap ( std::string filename ) {
-	_bitmap.write ( filename );
+//	_bitmap.write ( filename, _fractal );
+	filename = "pp";
 }
 
 void FractalCreator::countIterations () {
@@ -118,5 +119,6 @@ void FractalCreator::countIterations () {
 		_totalIterations += _histogram[i];
 	}
 }
+
 
 

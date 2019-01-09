@@ -8,6 +8,7 @@ class EscapeFractal : public Fractal {
 		int _maxIterations;
 		virtual int getIterations ( double x, double y ) = 0;
 		virtual void calculateFractal () override;
+		void setMaxIterations ( int iterations );
 		virtual ~EscapeFractal () {}
 };
 
