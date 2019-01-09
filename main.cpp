@@ -2,10 +2,10 @@
 #include <vector>
 
 #include "zoomlist.h"
-#include "fractalcreator.h"
 #include "fractal.h"
 #include "newton.h"
 #include "histogram.h"
+#include "mandelbrot.h"
 
 using namespace std;
 
@@ -29,7 +29,7 @@ int main ( int argc, char *argv[] ) {
 //	fractal->save ();
 
 
-	fractal = new Mandelbrot ( 1000, coloring.get () );
+	Fractal *fractal = new Mandelbrot ( 1000, coloring.get () );
 	fractal->setDimensions ( 800, 600 );
 	fractal->addZoom ( Zoom ( 295, 202, 0.1 ) );
 	fractal->addZoom ( Zoom ( 312, 304, 0.1 ) );

@@ -2,7 +2,7 @@
 #define JULIA_H
 #include "escapefractal.h"
 
-class Julia : public EscapeFractal {
+class Julia : public Fractal {
 	public:
 		Julia ( int maxIterations, ColorScheme *coloringMethod );
 		int getIterations ( double x, double y );

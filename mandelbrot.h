@@ -2,7 +2,7 @@
 #define MANDELBROT_H
 #include "escapefractal.h"
 
-class Mandelbrot : public EscapeFractal {
+class Mandelbrot : public Fractal {
 	public:
 		int getIterations ( double x, double y ) override;
 		Mandelbrot(int maxIterations, ColorScheme *coloringMethod );

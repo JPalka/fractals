@@ -4,7 +4,7 @@
 #include "escapefractal.h"
 #include <complex>
 
-class Newton : public EscapeFractal {
+class Newton : public Fractal {
 		std::complex<double> baseFunction ( std::complex<double> z );
 		std::complex<double> derivativeFunction ( std::complex<double> z );
 	public:

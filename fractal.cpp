@@ -34,3 +34,19 @@ void Fractal::setDimensions ( int width, int height ) {
 	_zoomList.add ( Zoom ( _width / 2, _height / 2, 4.0 / _width ) );
 	_outputFile.setDimensions ( _width, _height );
 }
+
+
+void Fractal::calculateFractal () {
+	for ( uint x = 0; x < _width; x++ ) {
+		for ( uint y = 0; y < _height; y++ ) {
+			std::pair <double, double> coords = _zoomList.doZoom (x, y);
+			int iterations = this->getIterations ( coords.first, coords.second );
+			_fractal[y * _width + x]._iterations = iterations;
+		}
+	}
+	std::cout << "Calculated fractal\n";
+}
+
+void Fractal::setMaxIterations ( int iterations ) {
+	_maxIterations = iterations;
+}

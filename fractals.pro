@@ -8,7 +8,6 @@ SOURCES += main.cpp \
     bitmap.cpp \
     mandelbrot.cpp \
     zoomlist.cpp \
-    fractalcreator.cpp \
     tricorn.cpp \
     julia.cpp \
     histogram.cpp \
@@ -27,7 +26,6 @@ HEADERS += \
     mandelbrot.h \
     zoom.h \
     zoomlist.h \
-    fractalcreator.h \
     rgb.h \
     tricorn.h \
     julia.h \
