@@ -30,22 +30,22 @@ int main ( int argc, char *argv[] ) {
 //	fractal->colorFractal ();
 //	fractal->_fractalName = "NewtonTest";
 //	fractal->save ();
-	Fractal *fractal = new Mandelbrot ( 1000, hist );
+	Fractal *fractal = new Mandelbrot ( 1000, range );
 	fractal->setDimensions ( 800, 600 );
 	fractal->addZoom ( Zoom ( 295, 202, 0.1 ) );
 	fractal->addZoom ( Zoom ( 312, 304, 0.1 ) );
 	fractal->calculateFractal ();
 	fractal->colorFractal ();
-	fractal->_fractalName = "MandelbrotTestWhite";
+	fractal->_fractalName = "MandelbrotTestRange";
 	fractal->save ();
 	std::cout << "Saved first frac\n";
 
-	fractal->setColorScheme ( range );
-	std::cout << "changed color scheme\n";
-	fractal->colorFractal ();
-	fractal->_fractalName = "MandelbrotTestRange";
-	fractal->save ();
-	std::cout << "saved second frac\n";
+//	fractal->setColorScheme ( range );
+//	std::cout << "changed color scheme\n";
+//	fractal->colorFractal ();
+//	fractal->_fractalName = "MandelbrotTestRange";
+//	fractal->save ();
+//	std::cout << "saved second frac\n";
 //	delete fractal;
 
 //	fractal = new Julia ( 1000, coloring.get () );

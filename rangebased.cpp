@@ -27,9 +27,7 @@ RangeBased::RangeBased ( RangeBased &source ) {
 	_maxIterations = source._maxIterations;
 	_histogram = std::unique_ptr<int[]> ( new int[_maxIterations + 1]{0} ); //Póki co nie kopiuje histogramu
 	_colorRanges = source._colorRanges;
-	int i  = 0;
 }
-
 /* Ten rodzaj ustawiania kolorów zmienia kolory w zależności od max iteracji gdyżpo zmiana max iteracji zmienia
  * zakresy kolorów podane jako % max iteracji. ColorRange ( 0.5, RGB() ) przy maxIterations=1000 wychodzi 500
  * a przy maxIterations=10000 już 5000. Zmienia sie przez to ilość pixeli w zakresach a ta jest używana w
@@ -38,6 +36,11 @@ RangeBased::RangeBased ( RangeBased &source ) {
 void RangeBased::color ( int width, int height, std::vector<Pixel> &pixels ) {
 	fillHistogram ( width, height, pixels );
 	calculateRangeTotals ();
+	// DEBUG. Printuje zakresy pixeli
+	for ( auto range: _colorRanges ) {
+		std::cout << range._range << " " << range._pixelCount << " " << range._color._r << "\\" << range._color._g << "\\" << range._color._b << std::endl;
+	}
+
 	for ( int i = 0; i < width; i++ ) {
 		for ( int j = 0; j < height; j++ ) {
 			int iterations = pixels[j * width + i]._iterations;
