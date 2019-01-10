@@ -34,13 +34,9 @@ void Histogram::fillHistogram ( int width, int height, std::vector<Pixel> pixels
 	std::cout << "Filled histogram with iterations" << "\n";
 }
 
-/* Ten rodzaj ustawiania kolorów zmienia kolory w zależności od max iteracji gdyżpo zmiana max iteracji zmienia
- * zakresy kolorów podane jako % max iteracji. ColorRange ( 0.5, RGB() ) przy maxIterations=1000 wychodzi 500
- * a przy maxIterations=10000 już 5000. Zmienia sie przez to ilość pixeli w zakresach a ta jest używana w
- * obliczania koloru. Fix?
- * */
 void Histogram::color ( int width, int height, std::vector<Pixel> &pixels ) {
 	fillHistogram ( width, height, pixels );
+	int total = countTotalIterations ();
 	for ( int i = 0; i < width; i++ ) {
 		for ( int j = 0; j < height; j++ ) {
 			int iterations = pixels[j * width + i]._iterations;
@@ -49,7 +45,6 @@ void Histogram::color ( int width, int height, std::vector<Pixel> &pixels ) {
 			double blue{0};
 			if ( iterations != _maxIterations ) {
 				double hue = 0;
-				int total = countTotalIterations ();
 				for ( int iter = 0; iter < iterations; iter++ ) {
 					hue += _histogram[iter];
 				}
