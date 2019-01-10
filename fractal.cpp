@@ -50,3 +50,10 @@ void Fractal::calculateFractal () {
 void Fractal::setMaxIterations ( int iterations ) {
 	_maxIterations = iterations;
 }
+
+void Fractal::setColorScheme ( ColorScheme &colorScheme ) {
+	_coloringMethod.release ();
+	_coloringMethod = std::unique_ptr<ColorScheme> ( colorScheme.clone () );
+//	_coloringMethod = std::unique_ptr<ColorScheme> ( colorScheme );
+	int i = 0;
+}

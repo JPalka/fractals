@@ -2,9 +2,9 @@
 
 #include <vector>
 
-Newton::Newton ( int maxIterations, ColorScheme *coloringMethod ) {
+Newton::Newton ( int maxIterations, ColorScheme &coloringMethod ) {
 	_maxIterations = maxIterations;
-	_coloringMethod = std::unique_ptr<ColorScheme> ( coloringMethod );
+	_coloringMethod = std::unique_ptr<ColorScheme> ( coloringMethod.clone () );
 }
 
 int Newton::getIterations ( double x, double y ) {

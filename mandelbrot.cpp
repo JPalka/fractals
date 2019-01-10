@@ -2,9 +2,9 @@
 #include <complex>
 #include <memory>
 
-Mandelbrot::Mandelbrot ( int maxIterations, ColorScheme *coloringMethod ) {
+Mandelbrot::Mandelbrot ( int maxIterations, ColorScheme &coloringMethod ) {
 	_maxIterations = maxIterations;
-	_coloringMethod = std::unique_ptr<ColorScheme> ( coloringMethod );
+	_coloringMethod = std::unique_ptr<ColorScheme> ( coloringMethod.clone () );
 //	_coloringMethod = std::unique_ptr<ColorScheme> ( new Histogram ( maxIterations, RGB ( 255, 0, 0 ) ) );
 }
 

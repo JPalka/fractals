@@ -12,7 +12,6 @@ SOURCES += main.cpp \
     julia.cpp \
     histogram.cpp \
     fractal.cpp \
-    escapefractal.cpp \
     colorrange.cpp \
     newton.cpp \
     rangebased.cpp
@@ -22,7 +21,6 @@ HEADERS += \
     bitmapinfoheader.h \
     bitmap.h \
     fractal.h \
-    escapefractal.h \
     mandelbrot.h \
     zoom.h \
     zoomlist.h \

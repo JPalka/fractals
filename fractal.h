@@ -23,11 +23,11 @@ class Fractal {
 		virtual int getIterations ( double x, double y ) = 0; // oblicza ilosc iteracji
 		Fractal ( );
 	public:
-
 		void calculateFractal (); // Oblicza fraktal
 		void setDimensions ( int width, int height );
 		std::string _fractalName {};
 		void setMaxIterations ( int iterations );
+		void setColorScheme (ColorScheme &colorScheme );
 		void addZoom ( Zoom zoom );
 		/* Koloruje piksele fraktala na podstawie danych policzonych wczesniej i schematu kolorowania
 		 * Póki co ino histogram

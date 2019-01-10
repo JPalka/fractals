@@ -6,7 +6,7 @@ struct RGB {
 		double _r;
 		double _g;
 		double _b;
-		RGB ( double r, double g, double b ) : _r(r), _g(g), _b(b) {
+		RGB ( double r = 0, double g = 0, double b = 0 ) : _r(r), _g(g), _b(b) {
 
 		}
 		RGB operator- ( const RGB &rhs ) {

@@ -2,9 +2,9 @@
 #include <math.h>
 #include <complex>
 
-Tricorn::Tricorn ( int maxIterations, ColorScheme *coloringMethod )  {
+Tricorn::Tricorn ( int maxIterations, ColorScheme &coloringMethod )  {
 	_maxIterations = maxIterations;
-	_coloringMethod = std::unique_ptr<ColorScheme> ( coloringMethod );
+	_coloringMethod = std::unique_ptr<ColorScheme> ( coloringMethod.clone() );
 }
 
 int Tricorn::getIterations ( double x, double y ) {

@@ -10,6 +10,17 @@ Histogram::Histogram ( uint maxIterations, RGB color ) : _histogram ( new int[ma
 , _color ( color ) {
 }
 
+Histogram::Histogram ( Histogram &source ) {
+	std::cout << "Histogram copy constructor";
+	_color = source._color;
+	_maxIterations = source._maxIterations;
+	_histogram = std::unique_ptr<int[]> ( new int[_maxIterations + 1]{0} );
+}
+
+Histogram::~Histogram () {
+	std::cout << "Histogram destructor\n";
+}
+
 void Histogram::setColor( RGB color ) {
 	_color = color;
 }
@@ -53,6 +64,12 @@ void Histogram::color ( int width, int height, std::vector<Pixel> &pixels ) {
 	}
 
 }
+
+Histogram *Histogram::clone()
+{
+	return new Histogram ( *this );
+}
+
 int Histogram::countTotalIterations ( ) {
 	int total = 0;
 	for ( int i = 0; i < _maxIterations; i++ ) {

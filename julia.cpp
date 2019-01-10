@@ -1,11 +1,11 @@
 #include "julia.h"
 #include <math.h>
 #include <complex>
+#include <memory>
 
-
-Julia::Julia ( int maxIterations, ColorScheme *coloringMethod ) {
+Julia::Julia ( int maxIterations, ColorScheme &coloringMethod ) {
 	_maxIterations = maxIterations;
-	_coloringMethod = std::unique_ptr<ColorScheme> ( coloringMethod );
+	_coloringMethod = std::unique_ptr<ColorScheme> ( coloringMethod.clone() );
 }
 
 int Julia::getIterations ( double x, double y ) {
