@@ -13,6 +13,10 @@ void Fractal::addZoom ( Zoom zoom ) {
 	_zoomList.add ( zoom );
 }
 
+ColorScheme &Fractal::getColorScheme ( ) {
+	return *_coloringMethod;
+}
+
 void Fractal::colorFractal()
 {
 //	int i = 0;
@@ -54,6 +58,4 @@ void Fractal::setMaxIterations ( int iterations ) {
 void Fractal::setColorScheme ( ColorScheme &colorScheme ) {
 	_coloringMethod.release ();
 	_coloringMethod = std::unique_ptr<ColorScheme> ( colorScheme.clone () );
-//	_coloringMethod = std::unique_ptr<ColorScheme> ( colorScheme );
-	int i = 0;
 }

@@ -11,7 +11,7 @@ void RangeBased::fillHistogram ( int width, int height, std::vector<Pixel> pixel
 	for ( Pixel pixel: pixels ) {
 		_histogram[pixel._iterations]++;
 	}
-	std::cout << width << "\n";
+//	std::cout << width << "\n";
 }
 
 RangeBased::RangeBased ( uint maxIterations ) : _histogram ( new int[maxIterations + 1]{0} )
@@ -81,15 +81,37 @@ ColorScheme *RangeBased::clone () {
 }
 
 void RangeBased::addColorRange ( ColorRange colorRange ) {
+	//Zeruje ilość pixeli w każdym zakresie. Te mogą sie nawarstwiać jeśli kolorowano pixele między zmianami
+	for ( uint d = 0; d < _colorRanges.size (); d++ ) {
+		_colorRanges[d]._pixelCount = 0;
+	}
+
+	//Szuka takiego samego zakresu jaki chce sie dodać, usuwa go i dodaje nowy. TODO: zrobić to mniej kulawo
+	for ( auto it = _colorRanges.begin (); it < _colorRanges.end (); it++ ) {
+		if ( it->getRange () == colorRange.getRange () ) {
+			_colorRanges.erase ( it );
+			break; // jak juz znaleziono cos do usuniecia to sio.
+		}
+	}
 	_colorRanges.push_back ( colorRange );
 	std::sort ( _colorRanges.begin (), _colorRanges.end () );
+	_colorRanges.shrink_to_fit ();
 }
 
-// Get iterator to coloring range a specific pixel is in
-std::vector<ColorRange>::iterator RangeBased::getRange ( Pixel &pixel ) {
-	if ( pixel._iterations == 50 ) {
-		int sop{0};
+void RangeBased::removeColorRange ( double range ) {
+	if ( range == 0 || range == 1 ) { //Nie ma usuwania pierwszego i ostatniego zakresu i już.
+		return;
 	}
+	for ( auto it = _colorRanges.begin (); it < _colorRanges.end (); it++ ) {
+		if ( it->getRange () == range ) {
+			_colorRanges.erase ( it );
+		}
+	}
+}
+
+// Zwraca iterator do zakresu w którym znajduje sie pixel.
+// jak pixel nie lezy w zadnym zakresie (jest na max iteracjach) to zwraca pierwszy zakres
+std::vector<ColorRange>::iterator RangeBased::getRange ( Pixel &pixel ) {
 	std::vector<ColorRange>::iterator range = _colorRanges.begin ();
 	for ( auto it = _colorRanges.begin (); it < _colorRanges.end (); it++ ) {
 		double rangeMaxIteration = (it)->getRange () * _maxIterations;

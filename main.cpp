@@ -10,14 +10,7 @@
 
 using namespace std;
 
-int main ( int argc, char *argv[] ) {
-//	const int WIDTH = 800;
-//	const int HEIGHT = 600;
-//	int maxIterations = 1000;
-	string name {"image.bmp"};
-	if ( argc == 2 ) {
-		name = argv[1];
-	}
+int main ( ) {
 //	std::unique_ptr<ColorScheme> coloring ( new Histogram ( 1000, RGB ( 0, 0, 255 ) ) );
 	Histogram hist ( 1000, RGB ( 255, 255, 255 ) );
 	RangeBased range ( 1000 );
@@ -31,14 +24,24 @@ int main ( int argc, char *argv[] ) {
 //	fractal->_fractalName = "NewtonTest";
 //	fractal->save ();
 	Fractal *fractal = new Mandelbrot ( 1000, range );
+	fractal->getColorScheme().removeColorRange ( 0.05 );
+
+	fractal->getColorScheme().addColorRange ( ColorRange ( 0.05, RGB ( 100, 100, 100 ) ) );
 	fractal->setDimensions ( 800, 600 );
 	fractal->addZoom ( Zoom ( 295, 202, 0.1 ) );
 	fractal->addZoom ( Zoom ( 312, 304, 0.1 ) );
 	fractal->calculateFractal ();
 	fractal->colorFractal ();
-	fractal->_fractalName = "MandelbrotTestRange";
+	fractal->_fractalName = "TEST1";
 	fractal->save ();
-	std::cout << "Saved first frac\n";
+	std::cout << "Saved TEST1\n";
+
+	fractal->getColorScheme ().addColorRange ( ColorRange ( 0.05, RGB ( 255, 255, 255 ) ) );
+	fractal->colorFractal ();
+	fractal->_fractalName = "TEST2";
+	fractal->save ();
+	std::cout << "Saved TEST2\n";
+
 
 //	fractal->setColorScheme ( range );
 //	std::cout << "changed color scheme\n";
@@ -47,27 +50,6 @@ int main ( int argc, char *argv[] ) {
 //	fractal->save ();
 //	std::cout << "saved second frac\n";
 //	delete fractal;
-
-//	fractal = new Julia ( 1000, coloring.get () );
-//	fractal->setDimensions ( 800, 600 );
-////	fractal->addZoom ( Zoom ( 295, 202, 0.1 ) );
-////	fractal->addZoom ( Zoom ( 312, 304, 0.1 ) );
-//	fractal->calculateFractal ();
-//	fractal->colorFractal ();
-//	fractal->_fractalName = "JuliaTest";
-//	fractal->save ();
-////	delete fractal;
-
-
-//	fractal = new Tricorn ( 1000, coloring.get () );
-//	fractal->setDimensions ( 800, 600 );
-////	fractal->addZoom ( Zoom ( 295, 202, 0.1 ) );
-////	fractal->addZoom ( Zoom ( 312, 304, 0.1 ) );
-//	fractal->calculateFractal ();
-//	fractal->colorFractal ();
-//	fractal->_fractalName = "TricornTest";
-//	fractal->save ();
-
 	delete fractal;
 	return 0;
 }

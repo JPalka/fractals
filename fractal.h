@@ -36,6 +36,7 @@ class Fractal {
 		// Zapisuje fractal do pliku
 		void save ();
 		virtual ~Fractal () {}
+		ColorScheme &getColorScheme ();
 };
 
 #endif // FRACTAL_H

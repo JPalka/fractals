@@ -3,6 +3,7 @@
 
 #include <vector>
 #include "pixel.h"
+#include "colorrange.h"
 #include <iostream>
 
 // Schemat kolorowania pixeli. moze być histogram, gładszy histogram, whatever.
@@ -13,6 +14,8 @@ class ColorScheme {
 			std::cout << "Colorscheme destructor\n";
 		}
 		virtual ColorScheme *clone () = 0;
+		virtual void removeColorRange ( double range ) { range+= 1; }
+		virtual void addColorRange ( ColorRange colorRange ) { colorRange.getRange (); }
 };
 
 

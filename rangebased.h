@@ -17,7 +17,8 @@ class RangeBased : public ColorScheme {
 		RangeBased ( uint maxIterations );
 		RangeBased ( RangeBased &source );
 		void color ( int width, int height, std::vector<Pixel> &pixels ) override;
-		void addColorRange ( ColorRange colorRange );
+		void addColorRange ( ColorRange colorRange ) override;
+		void removeColorRange ( double range ) override;
 		int countTotalIterations ();
 		ColorScheme *clone ();
 	protected:
