@@ -40,7 +40,6 @@ void RangeBased::color ( int width, int height, std::vector<Pixel> &pixels ) {
 	for ( auto range: _colorRanges ) {
 		std::cout << range._range << " " << range._pixelCount << " " << range._color._r << "\\" << range._color._g << "\\" << range._color._b << std::endl;
 	}
-
 	for ( int i = 0; i < width; i++ ) {
 		for ( int j = 0; j < height; j++ ) {
 			int iterations = pixels[j * width + i]._iterations;
@@ -61,11 +60,8 @@ void RangeBased::color ( int width, int height, std::vector<Pixel> &pixels ) {
 				blue = startColor._b + colorDiff._b * (double) totalPixels / range->_pixelCount;
 			}
 			RGB color = RGB ( red, green, blue );
-			if ( color._r == 2 && color._g == 100 && color._b == 68 ) {
-				int codochuja = 9;
-			}
 			if ( iterations == 50 ) {
-				color._r = 255; color._g = 255; color._b = 255;
+//				color._r = 255; color._g = 255; color._b = 255;
 			}
 			pixels[j * width + i].setColor ( color );
 		}
@@ -94,15 +90,18 @@ std::vector<ColorRange>::iterator RangeBased::getRange ( Pixel &pixel ) {
 	if ( pixel._iterations == 50 ) {
 		int sop{0};
 	}
+	std::vector<ColorRange>::iterator range = _colorRanges.begin ();
 	for ( auto it = _colorRanges.begin (); it < _colorRanges.end (); it++ ) {
-		double rangeMaxIteration = (it+1)->getRange () * _maxIterations;
-		if ( pixel._iterations <= rangeMaxIteration ) {
-			return it;
+		double rangeMaxIteration = (it)->getRange () * _maxIterations;
+		if ( rangeMaxIteration > pixel._iterations ) {
+			break;
 		}
+		range = it;
 	}
+	return range;
 //	return _colorRanges.end (); // Zwraca end iterator jak pixel nie jest w żadnym zakresie
 	//TODO: poprawić tak żeby Piksel zawsze był w jakimś zakresie
-	throw "Pixel doesnt fit into any range. UNACCEPTABLE";
+//	throw "Pixel doesnt fit into any range. UNACCEPTABLE";
 }
 
 // Oblicza ile pixeli jest w zakresach kolorów
