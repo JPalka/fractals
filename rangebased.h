@@ -24,6 +24,7 @@ class RangeBased : public ColorScheme {
 	protected:
 		void calculateRangeTotals ();
 		std::vector<ColorRange>::iterator getRange( Pixel &pixel );
+		void resetHistogram();
 };
 
 #endif // RANGEBASED_H

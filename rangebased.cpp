@@ -11,7 +11,6 @@ void RangeBased::fillHistogram ( int width, int height, std::vector<Pixel> pixel
 	for ( Pixel pixel: pixels ) {
 		_histogram[pixel._iterations]++;
 	}
-//	std::cout << width << "\n";
 }
 
 RangeBased::RangeBased ( uint maxIterations ) : _histogram ( new int[maxIterations + 1]{0} )
@@ -34,6 +33,7 @@ RangeBased::RangeBased ( RangeBased &source ) {
  * obliczania koloru. Fix?
  * */
 void RangeBased::color ( int width, int height, std::vector<Pixel> &pixels ) {
+	resetHistogram ();
 	fillHistogram ( width, height, pixels );
 	calculateRangeTotals ();
 	// DEBUG. Printuje zakresy pixeli
@@ -80,12 +80,18 @@ ColorScheme *RangeBased::clone () {
 	return new RangeBased ( *this );
 }
 
+void RangeBased::resetHistogram () {
+	//Zeruje histogram
+	for ( int d = 0; d < _maxIterations; d++ ) {
+		_histogram[d] = 0;
+	}
+}
+
 void RangeBased::addColorRange ( ColorRange colorRange ) {
 	//Zeruje ilość pixeli w każdym zakresie. Te mogą sie nawarstwiać jeśli kolorowano pixele między zmianami
 	for ( uint d = 0; d < _colorRanges.size (); d++ ) {
 		_colorRanges[d]._pixelCount = 0;
 	}
-
 	//Szuka takiego samego zakresu jaki chce sie dodać, usuwa go i dodaje nowy. TODO: zrobić to mniej kulawo
 	for ( auto it = _colorRanges.begin (); it < _colorRanges.end (); it++ ) {
 		if ( it->getRange () == colorRange.getRange () ) {
