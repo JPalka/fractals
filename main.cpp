@@ -12,9 +12,8 @@ using namespace std;
 
 int main ( ) {
 //	std::unique_ptr<ColorScheme> coloring ( new Histogram ( 1000, RGB ( 0, 0, 255 ) ) );
-	Histogram hist ( 1000, RGB ( 255, 255, 255 ) );
-	RangeBased range ( 1000 );
-	Histogram histBlue ( 1000, RGB ( 0, 0, 255 ) );
+//	Histogram hist ( 1000, RGB ( 255, 255, 255 ) );
+//	Histogram histBlue ( 1000, RGB ( 0, 0, 255 ) );
 //	Fractal *fractal = new Newton ( 1000, coloring.get () );
 //	fractal->setDimensions ( 800, 600 );
 ////	fractal->addZoom ( Zoom ( 400, 300, 0.5 ) );
@@ -23,22 +22,24 @@ int main ( ) {
 //	fractal->colorFractal ();
 //	fractal->_fractalName = "NewtonTest";
 //	fractal->save ();
+	RangeBased range ( 1000 );
 	Fractal *fractal = new Mandelbrot ( 1000, range );
-	fractal->getColorScheme().removeColorRange ( 0.05 );
+//	fractal->getColorScheme().removeColorRange ( 0.05 );
 
-	fractal->getColorScheme().addColorRange ( ColorRange ( 0.05, RGB ( 100, 100, 100 ) ) );
+//	fractal->getColorScheme().addColorRange ( ColorRange ( 0.05, RGB ( 100, 100, 100 ) ) );
 	fractal->setDimensions ( 800, 600 );
 	fractal->addZoom ( Zoom ( 295, 202, 0.1 ) );
 	fractal->addZoom ( Zoom ( 312, 304, 0.1 ) );
 	fractal->calculateFractal ();
 	fractal->colorFractal ();
-	fractal->_fractalName = "TEST1";
+	fractal->_fractalName = "TEST1000";
 	fractal->save ();
 	std::cout << "Saved TEST1\n";
-
-	fractal->getColorScheme ().addColorRange ( ColorRange ( 0.05, RGB ( 255, 255, 255 ) ) );
+	fractal->setMaxIterations ( 10000 );
+	fractal->calculateFractal ();
+//	fractal->getColorScheme ().addColorRange ( ColorRange ( 0.05, RGB ( 0, 0, 0 ) ) );
 	fractal->colorFractal ();
-	fractal->_fractalName = "TEST2";
+	fractal->_fractalName = "TEST10000";
 	fractal->save ();
 	std::cout << "Saved TEST2\n";
 

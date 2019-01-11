@@ -17,6 +17,7 @@ class Histogram : public ColorScheme {
 	void setColor ( RGB color );
 	Histogram ( uint maxIterations , RGB color );
 	Histogram ( Histogram & source );
+	void setMaxIterations ( int maxIterations ) override;
 	~Histogram ();
 	void color ( int width, int height, std::vector<Pixel> &pixels ) override;
 	Histogram *clone () override;

@@ -53,6 +53,7 @@ void Fractal::calculateFractal () {
 
 void Fractal::setMaxIterations ( int iterations ) {
 	_maxIterations = iterations;
+	_coloringMethod->setMaxIterations ( iterations );
 }
 
 void Fractal::setColorScheme ( ColorScheme &colorScheme ) {

@@ -17,6 +17,10 @@ Histogram::Histogram ( Histogram &source ) {
 	_histogram = std::unique_ptr<int[]> ( new int[_maxIterations + 1]{0} );
 }
 
+void Histogram::setMaxIterations ( int maxIterations ) {
+	_maxIterations = maxIterations;
+}
+
 Histogram::~Histogram () {
 	std::cout << "Histogram destructor\n";
 }

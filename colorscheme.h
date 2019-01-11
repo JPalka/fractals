@@ -16,6 +16,7 @@ class ColorScheme {
 		virtual ColorScheme *clone () = 0;
 		virtual void removeColorRange ( double range ) { range+= 1; }
 		virtual void addColorRange ( ColorRange colorRange ) { colorRange.getRange (); }
+		virtual void setMaxIterations ( int maxIterations ) { maxIterations += 1; }
 };
 
 

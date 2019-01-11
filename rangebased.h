@@ -20,6 +20,7 @@ class RangeBased : public ColorScheme {
 		void addColorRange ( ColorRange colorRange ) override;
 		void removeColorRange ( double range ) override;
 		int countTotalIterations ();
+		void setMaxIterations ( int maxIterations ) override;
 		ColorScheme *clone ();
 	protected:
 		void calculateRangeTotals ();

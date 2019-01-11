@@ -76,6 +76,12 @@ int RangeBased::countTotalIterations ( ) {
 	return total;
 }
 
+void RangeBased::setMaxIterations ( int maxIterations ) {
+	_maxIterations = maxIterations;
+	_histogram = std::unique_ptr<int[]> ( new int[maxIterations+1] );
+	resetHistogram ();
+}
+
 ColorScheme *RangeBased::clone () {
 	return new RangeBased ( *this );
 }
