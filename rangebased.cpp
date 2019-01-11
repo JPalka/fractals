@@ -71,7 +71,6 @@ void RangeBased::color ( int width, int height, std::vector<Pixel> &pixels ) {
 		}
 	}
 	std::cout << " - done\n";
-
 }
 int RangeBased::countTotalIterations ( ) {
 	int total = 0;

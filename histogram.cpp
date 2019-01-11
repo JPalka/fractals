@@ -11,7 +11,7 @@ Histogram::Histogram ( uint maxIterations, RGB color ) : _histogram ( new int[ma
 }
 
 Histogram::Histogram ( Histogram &source ) {
-	std::cout << "Histogram copy constructor";
+//	std::cout << "Histogram copy constructor";
 	_color = source._color;
 	_maxIterations = source._maxIterations;
 	_histogram = std::unique_ptr<int[]> ( new int[_maxIterations + 1]{0} );
@@ -28,6 +28,7 @@ Histogram::~Histogram () {
 
 void Histogram::setColor( RGB color ) {
 	_color = color;
+	std::cout << "Set color\n";
 }
 
 void Histogram::fillHistogram ( int width, int height, std::vector<Pixel> pixels ) {
@@ -42,6 +43,8 @@ void Histogram::fillHistogram ( int width, int height, std::vector<Pixel> pixels
 void Histogram::color ( int width, int height, std::vector<Pixel> &pixels ) {
 	fillHistogram ( width, height, pixels );
 	int total = countTotalIterations ();
+	int calculatedProgress = 0;
+	int totalProgress = width * height;
 	for ( int i = 0; i < width; i++ ) {
 		for ( int j = 0; j < height; j++ ) {
 			int iterations = pixels[j * width + i]._iterations;
@@ -60,9 +63,13 @@ void Histogram::color ( int width, int height, std::vector<Pixel> &pixels ) {
 			}
 			RGB color = RGB ( red, green, blue );
 			pixels[j * width + i].setColor ( color );
+			calculatedProgress++;
+			if ( calculatedProgress % ( ( width * height ) / 100 ) == 0 || calculatedProgress == total ) {
+				ColorScheme::printProgress ( ( (double)calculatedProgress / totalProgress ) * 100 );
+			}
 		}
 	}
-
+	std::cout << " - done\n";
 }
 
 Histogram *Histogram::clone()
