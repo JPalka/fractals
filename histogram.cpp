@@ -19,6 +19,7 @@ Histogram::Histogram ( Histogram &source ) {
 
 void Histogram::setMaxIterations ( int maxIterations ) {
 	_maxIterations = maxIterations;
+	_histogram = std::unique_ptr<int[]> ( new int[maxIterations+1]{0} );
 }
 
 Histogram::~Histogram () {

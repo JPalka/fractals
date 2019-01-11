@@ -78,8 +78,9 @@ int RangeBased::countTotalIterations ( ) {
 
 void RangeBased::setMaxIterations ( int maxIterations ) {
 	_maxIterations = maxIterations;
-	_histogram = std::unique_ptr<int[]> ( new int[maxIterations+1] );
+	_histogram = std::unique_ptr<int[]> ( new int[maxIterations+1]{0} );
 	resetHistogram ();
+	resetColorRanges ();
 }
 
 ColorScheme *RangeBased::clone () {
@@ -92,12 +93,15 @@ void RangeBased::resetHistogram () {
 		_histogram[d] = 0;
 	}
 }
-
-void RangeBased::addColorRange ( ColorRange colorRange ) {
+void RangeBased::resetColorRanges () {
 	//Zeruje ilość pixeli w każdym zakresie. Te mogą sie nawarstwiać jeśli kolorowano pixele między zmianami
 	for ( uint d = 0; d < _colorRanges.size (); d++ ) {
 		_colorRanges[d]._pixelCount = 0;
 	}
+}
+
+void RangeBased::addColorRange ( ColorRange colorRange ) {
+	resetColorRanges ();
 	//Szuka takiego samego zakresu jaki chce sie dodać, usuwa go i dodaje nowy. TODO: zrobić to mniej kulawo
 	for ( auto it = _colorRanges.begin (); it < _colorRanges.end (); it++ ) {
 		if ( it->getRange () == colorRange.getRange () ) {

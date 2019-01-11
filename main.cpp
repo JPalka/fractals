@@ -23,6 +23,7 @@ int main ( ) {
 //	fractal->_fractalName = "NewtonTest";
 //	fractal->save ();
 	RangeBased range ( 1000 );
+	Histogram hist ( 1000, RGB ( 100, 100, 100 ) );
 	Fractal *fractal = new Mandelbrot ( 1000, range );
 //	fractal->getColorScheme().removeColorRange ( 0.05 );
 
