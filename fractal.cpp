@@ -9,6 +9,10 @@ Fractal::Fractal () : _width ( 600 )
 	_zoomList.add ( Zoom ( _width / 2, _height / 2, 4.0 / _width ) );
 }
 
+void Fractal::printMessage( std::string message ) {
+	std::cout << message << std::endl;
+}
+
 void Fractal::addZoom ( Zoom zoom ) {
 	_zoomList.add ( zoom );
 }
@@ -17,9 +21,9 @@ ColorScheme &Fractal::getColorScheme ( ) {
 	return *_coloringMethod;
 }
 
-void Fractal::colorFractal()
-{
+void Fractal::colorFractal() {
 //	int i = 0;
+	std::cout << "Coloring fractal...\n";
 	_coloringMethod->color ( _width, _height, _fractal );
 	std::cout << "Finished coloring fractal\n";
 }
@@ -39,24 +43,36 @@ void Fractal::setDimensions ( int width, int height ) {
 	_outputFile.setDimensions ( _width, _height );
 }
 
-
 void Fractal::calculateFractal () {
+	std::cout << "Calculating fractal..." << std::endl;
+	int total = _width * _height;
+	int calculated = 0;
 	for ( uint x = 0; x < _width; x++ ) {
 		for ( uint y = 0; y < _height; y++ ) {
 			std::pair <double, double> coords = _zoomList.doZoom (x, y);
 			int iterations = this->getIterations ( coords.first, coords.second );
 			_fractal[y * _width + x]._iterations = iterations;
+			calculated++;
+			if ( calculated % ( ( _width * _height ) / 100 ) == 0 || calculated == total ) {
+				std::cout << "\r";
+				std::cout.fill (0);
+				std::cout.width (5);
+				std::cout << std::left << std::setprecision (3) << ( (double)calculated / total ) * 100 << "%" << std::flush;
+			}
 		}
 	}
-	std::cout << "Calculated fractal\n";
+	std::cout.width ();
+	std::cout << " - done\n";
 }
 
 void Fractal::setMaxIterations ( int iterations ) {
 	_maxIterations = iterations;
 	_coloringMethod->setMaxIterations ( iterations );
+	std::cout << _fractalName << ": " << "Max iterations set to " << iterations << std::endl;
 }
 
 void Fractal::setColorScheme ( ColorScheme &colorScheme ) {
 	_coloringMethod.release ();
 	_coloringMethod = std::unique_ptr<ColorScheme> ( colorScheme.clone () );
+	std::cout << _fractalName << ": " << "Coloring method set.";
 }

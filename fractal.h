@@ -4,11 +4,13 @@
 #include <string>
 #include <memory>
 #include <vector>
+#include <iomanip>
 #include "zoomlist.h"
 #include "pixel.h"
 #include "colorscheme.h"
 #include "bitmap.h"
 #include "histogram.h"
+
 
 class Fractal {
 
@@ -22,12 +24,13 @@ class Fractal {
 		int _maxIterations; // Maksymalna liczba iteracji na piksel.
 		virtual int getIterations ( double x, double y ) = 0; // oblicza ilosc iteracji
 		Fractal ( );
+		void printMessage ( std::string message );
 	public:
 		void calculateFractal (); // Oblicza fraktal
 		void setDimensions ( int width, int height );
 		std::string _fractalName {};
 		void setMaxIterations ( int iterations );
-		void setColorScheme (ColorScheme &colorScheme );
+		void setColorScheme ( ColorScheme &colorScheme );
 		void addZoom ( Zoom zoom );
 		/* Koloruje piksele fraktala na podstawie danych policzonych wczesniej i schematu kolorowania
 		 * Póki co ino histogram

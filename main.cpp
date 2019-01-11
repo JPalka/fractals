@@ -26,7 +26,6 @@ int main ( ) {
 	Histogram hist ( 1000, RGB ( 100, 100, 100 ) );
 	Fractal *fractal = new Mandelbrot ( 1000, range );
 //	fractal->getColorScheme().removeColorRange ( 0.05 );
-
 //	fractal->getColorScheme().addColorRange ( ColorRange ( 0.05, RGB ( 100, 100, 100 ) ) );
 	fractal->setDimensions ( 800, 600 );
 	fractal->addZoom ( Zoom ( 295, 202, 0.1 ) );
@@ -36,11 +35,10 @@ int main ( ) {
 	fractal->_fractalName = "TEST1000";
 	fractal->save ();
 	std::cout << "Saved TEST1\n";
-	fractal->setMaxIterations ( 10000 );
+	fractal->setMaxIterations ( 2000 );
 	fractal->calculateFractal ();
-//	fractal->getColorScheme ().addColorRange ( ColorRange ( 0.05, RGB ( 0, 0, 0 ) ) );
 	fractal->colorFractal ();
-	fractal->_fractalName = "TEST10000";
+	fractal->_fractalName = "TEST2000";
 	fractal->save ();
 	std::cout << "Saved TEST2\n";
 

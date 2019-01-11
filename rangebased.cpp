@@ -36,7 +36,10 @@ void RangeBased::color ( int width, int height, std::vector<Pixel> &pixels ) {
 	resetHistogram ();
 	fillHistogram ( width, height, pixels );
 	calculateRangeTotals ();
+	int calculated = 0;
+	int total = width * height;
 	// DEBUG. Printuje zakresy pixeli
+	std::cout << "Color Ranges list\n";
 	for ( auto range: _colorRanges ) {
 		std::cout << range._range << " " << range._pixelCount << " " << range._color._r << "\\" << range._color._g << "\\" << range._color._b << std::endl;
 	}
@@ -60,12 +63,14 @@ void RangeBased::color ( int width, int height, std::vector<Pixel> &pixels ) {
 				blue = startColor._b + colorDiff._b * (double) totalPixels / range->_pixelCount;
 			}
 			RGB color = RGB ( red, green, blue );
-			if ( iterations == 50 ) {
-//				color._r = 255; color._g = 255; color._b = 255;
-			}
 			pixels[j * width + i].setColor ( color );
+			calculated++;
+			if ( calculated % ( ( width * height ) / 100 ) == 0 || calculated == total ) {
+				ColorScheme::printProgress ( ( (double)calculated / total ) * 100 );
+			}
 		}
 	}
+	std::cout << " - done\n";
 
 }
 int RangeBased::countTotalIterations ( ) {

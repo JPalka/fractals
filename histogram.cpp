@@ -23,7 +23,7 @@ void Histogram::setMaxIterations ( int maxIterations ) {
 }
 
 Histogram::~Histogram () {
-	std::cout << "Histogram destructor\n";
+//	std::cout << "Histogram destructor\n";
 }
 
 void Histogram::setColor( RGB color ) {
