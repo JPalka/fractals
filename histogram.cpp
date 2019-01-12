@@ -41,6 +41,7 @@ void Histogram::fillHistogram ( std::vector<Pixel> &pixels ) {
 	}
 	std::cout << "Filled histogram with iterations" << "\n";
 }
+
 void Histogram::colorPixel ( Pixel &pixel ) {
 	//stub
 	int total = countTotalIterations ();
