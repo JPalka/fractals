@@ -31,6 +31,7 @@ RangeBased::RangeBased ( RangeBased &source ) {
  * zakresy kolorów podane jako % max iteracji. ColorRange ( 0.5, RGB() ) przy maxIterations=1000 wychodzi 500
  * a przy maxIterations=10000 już 5000. Zmienia sie przez to ilość pixeli w zakresach a ta jest używana w
  * obliczania koloru. Fix?
+ * TODO: Zwiększanie iteracji nie poprawia jakości. FIX
  * */
 void RangeBased::color ( int width, int height, std::vector<Pixel> &pixels ) {
 	resetHistogram ();
@@ -106,7 +107,7 @@ void RangeBased::resetColorRanges () {
 
 void RangeBased::addColorRange ( ColorRange colorRange ) {
 	resetColorRanges ();
-	//Szuka takiego samego zakresu jaki chce sie dodać, usuwa go i dodaje nowy. TODO: zrobić to mniej kulawo
+	//Szuka takiego samego zakresu jaki chce sie dodać, usuwa go i zastępuje nowym. TODO: zrobić to mniej kulawo
 	for ( auto it = _colorRanges.begin (); it < _colorRanges.end (); it++ ) {
 		if ( it->getRange () == colorRange.getRange () ) {
 			_colorRanges.erase ( it );

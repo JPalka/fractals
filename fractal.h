@@ -11,7 +11,6 @@
 #include "bitmap.h"
 #include "histogram.h"
 
-
 class Fractal {
 
 	protected:
@@ -23,8 +22,11 @@ class Fractal {
 		Bitmap _outputFile; // Plik wynikowy. TODO: Dodać możliwość innych typów ( jpg, png, whatever )
 		int _maxIterations; // Maksymalna liczba iteracji na piksel.
 		virtual int getIterations ( double x, double y ) = 0; // oblicza ilosc iteracji
+		// oblicza dane fraktala dla pixela ( iteracje, wartość funkcji itp. dane do kolorowania pixela )
+		virtual void calculatePixelData ( Pixel &pixel ) = 0;
 		Fractal ( );
 		void printMessage ( std::string message );
+		void scalePixelCoordinates(Pixel &pixel, int x, int y);
 	public:
 		void calculateFractal (); // Oblicza fraktal
 		void setDimensions ( int width, int height );
@@ -33,13 +35,14 @@ class Fractal {
 		void setColorScheme ( ColorScheme &colorScheme );
 		void addZoom ( Zoom zoom );
 		/* Koloruje piksele fraktala na podstawie danych policzonych wczesniej i schematu kolorowania
-		 * Póki co ino histogram
 		 */
 		void colorFractal ();
 		// Zapisuje fractal do pliku
 		void save ();
 		virtual ~Fractal () {}
 		ColorScheme &getColorScheme ();
+	private:
+
 };
 
 #endif // FRACTAL_H

@@ -9,6 +9,7 @@ class Newton : public Fractal {
 		std::complex<double> derivativeFunction ( std::complex<double> z );
 	public:
 		int getIterations ( double x, double y ) override;
+		void calculatePixelData ( Pixel &pixel ) override;
 		Newton (int maxIterations, ColorScheme &coloringMethod );
 };
 

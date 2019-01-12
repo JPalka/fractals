@@ -5,6 +5,7 @@
 class Tricorn : public Fractal {
 	public:
 		Tricorn (int maxIterations , ColorScheme &coloringMethod);
+		void calculatePixelData ( Pixel &pixel ) override;
 		int getIterations(double x, double y);
 };
 

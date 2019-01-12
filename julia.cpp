@@ -23,3 +23,19 @@ int Julia::getIterations ( double x, double y ) {
 }
 
 
+void Julia::calculatePixelData ( Pixel &pixel ) {
+	std::complex<double> z ( pixel._scaledX, pixel._scaledY );
+	std::complex<double> c ( -0.162, 1.04 );
+	int iterations {0};
+	while ( iterations < _maxIterations ) {
+		z = z * z + c;
+		if ( abs( z ) > 2 ) {
+			break;
+		}
+		iterations++;
+	}
+	pixel._iterations = iterations;
+	pixel._z = z; // wartość funkcji fraktala po policzeniu iteracji
+}
+
+

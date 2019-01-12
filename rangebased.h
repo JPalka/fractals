@@ -13,6 +13,10 @@ class RangeBased : public ColorScheme {
 		std::vector<ColorRange> _colorRanges; //Ranges of colors. Range is defined as fraction of total iterations
 		int _maxIterations{0};
 		void fillHistogram (  int width, int height, std::vector<Pixel> pixels );
+		void calculateRangeTotals ();
+		std::vector<ColorRange>::iterator getRange( Pixel &pixel );
+		void resetHistogram();
+		void resetColorRanges();
 	public:
 		RangeBased ( uint maxIterations );
 		RangeBased ( RangeBased &source );
@@ -22,11 +26,6 @@ class RangeBased : public ColorScheme {
 		int countTotalIterations ();
 		void setMaxIterations ( int maxIterations ) override;
 		ColorScheme *clone ();
-	protected:
-		void calculateRangeTotals ();
-		std::vector<ColorRange>::iterator getRange( Pixel &pixel );
-		void resetHistogram();
-		void resetColorRanges();
 };
 
 #endif // RANGEBASED_H

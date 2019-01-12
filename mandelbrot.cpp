@@ -21,3 +21,18 @@ int Mandelbrot::getIterations ( double x, double y ) {
 	}
 	return iterations;
 }
+
+void Mandelbrot::calculatePixelData ( Pixel &pixel ) {
+	std::complex<double> z = 0;
+	std::complex<double> c ( pixel._scaledX, pixel._scaledY );
+	int iterations {0};
+	while ( iterations < _maxIterations ) {
+		z = z * z + c;
+		if ( abs( z ) > 2 ) {
+			break;
+		}
+		iterations++;
+	}
+	pixel._iterations = iterations;
+	pixel._z = z; // wartość funkcji fraktala po policzeniu iteracji
+}

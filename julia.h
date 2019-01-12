@@ -5,6 +5,7 @@
 class Julia : public Fractal {
 	public:
 		Julia (int maxIterations, ColorScheme &coloringMethod );
+		void calculatePixelData ( Pixel &pixel ) override;
 		int getIterations ( double x, double y );
 };
 

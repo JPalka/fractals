@@ -35,14 +35,13 @@ int main ( ) {
 	fractal->_fractalName = "TEST1000";
 	fractal->save ();
 	std::cout << "Saved " << fractal->_fractalName << "\n";
-	fractal->_fractalName = "TESTRANGE2000";
-	fractal->setColorScheme ( range );
+	fractal->_fractalName = "TEST2000";
+//	fractal->setColorScheme ( range );
 	fractal->setMaxIterations ( 2000 );
 	fractal->calculateFractal ();
 	fractal->colorFractal ();
 	fractal->save ();
 	std::cout << "Saved " << fractal->_fractalName << "\n";
-
 
 //	fractal->setColorScheme ( range );
 //	std::cout << "changed color scheme\n";
