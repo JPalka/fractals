@@ -21,13 +21,6 @@ ColorScheme &Fractal::getColorScheme ( ) {
 	return *_coloringMethod;
 }
 
-void Fractal::colorFractal() {
-//	int i = 0;
-	std::cout << "Coloring fractal...\n";
-	_coloringMethod->color ( _width, _height, _fractal );
-	std::cout << "Finished coloring fractal\n";
-}
-
 void Fractal::save()
 {
 	_outputFile.write ( _fractalName + ".bmp", _fractal );
@@ -47,6 +40,27 @@ void Fractal::scalePixelCoordinates ( Pixel &pixel, int x, int y ) {
 	std::pair <double, double> scaledCoords = _zoomList.doZoom (x, y);
 	pixel._scaledX = scaledCoords.first;
 	pixel._scaledY = scaledCoords.second;
+}
+
+void Fractal::colorFractal () {
+	_coloringMethod->init ( _fractal );
+	std::cout << "Coloring fractal..." << std::endl;
+//	_coloringMethod->color ( _width, _height, _fractal );
+	int total = _width * _height;
+	int calculated = 0;
+	for ( uint x = 0; x < _width; x++ ) {
+		for ( uint y = 0; y < _height; y++ ) {
+			_coloringMethod->colorPixel ( _fractal[y * _width + x] );
+			calculated++;
+			if ( calculated % ( ( _width * _height ) / 100 ) == 0 || calculated == total ) {
+				std::cout << "\r";
+				std::cout.fill (0);
+				std::cout.width (5);
+				std::cout << std::left << std::setprecision (3) << ( (double)calculated / total ) * 100 << "%" << std::flush;
+			}
+		}
+	}
+	std::cout << " - done\n";
 }
 
 void Fractal::calculateFractal () {

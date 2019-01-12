@@ -5,9 +5,7 @@
 #include <algorithm>
 #include <math.h>
 
-void RangeBased::fillHistogram ( int width, int height, std::vector<Pixel> pixels ) {
-	width = height;
-	height = width; //Usunąć to pózniej, dałem tylko żeby kompilator mordy nie darł
+void RangeBased::fillHistogram ( std::vector<Pixel> &pixels ) {
 	for ( Pixel pixel: pixels ) {
 		_histogram[pixel._iterations]++;
 	}
@@ -32,18 +30,11 @@ RangeBased::RangeBased ( RangeBased &source ) {
  * a przy maxIterations=10000 już 5000. Zmienia sie przez to ilość pixeli w zakresach a ta jest używana w
  * obliczania koloru. Fix?
  * TODO: Zwiększanie iteracji nie poprawia jakości. FIX
- * */
+ * *//*
 void RangeBased::color ( int width, int height, std::vector<Pixel> &pixels ) {
-	resetHistogram ();
-	fillHistogram ( width, height, pixels );
-	calculateRangeTotals ();
 	int calculated = 0;
 	int total = width * height;
-	// DEBUG. Printuje zakresy pixeli
-	std::cout << "Color Ranges list\n";
-	for ( auto range: _colorRanges ) {
-		std::cout << range._range << " " << range._pixelCount << " " << range._color._r << "\\" << range._color._g << "\\" << range._color._b << std::endl;
-	}
+
 	for ( int i = 0; i < width; i++ ) {
 		for ( int j = 0; j < height; j++ ) {
 			int iterations = pixels[j * width + i]._iterations;
@@ -72,7 +63,41 @@ void RangeBased::color ( int width, int height, std::vector<Pixel> &pixels ) {
 		}
 	}
 	std::cout << " - done\n";
+}*/
+
+void RangeBased::init ( std::vector<Pixel> &pixels ) {
+	resetHistogram ();
+	fillHistogram ( pixels );
+	calculateRangeTotals ();
+	// DEBUG. Printuje zakresy pixeli
+	std::cout << "Color Ranges list\n";
+	for ( auto range: _colorRanges ) {
+		std::cout << range._range << " " << range._pixelCount << " " << range._color._r << "\\" << range._color._g << "\\" << range._color._b << std::endl;
+	}
 }
+
+void RangeBased::colorPixel ( Pixel &pixel ) {
+	int iterations = pixel._iterations;
+	std::vector<ColorRange>::iterator range = getRange ( pixel );
+	RGB startColor = range->_color; //startowy kolor to kolor określony w zakresie w którym jest pixel
+	RGB endColor = ( range + 1 )->_color; //końcowy kolor to kolor określony w zakresie zaraz po tym w którym jest pixel
+	RGB colorDiff = endColor - startColor;
+	std::uint8_t red{0};
+	std::uint8_t green{0};
+	std::uint8_t blue{0};
+	if ( iterations != _maxIterations ) {
+		int totalPixels = 0;
+		for ( int iter = range->getRange () * _maxIterations; iter <= iterations; iter++ ) {
+			totalPixels += _histogram[iter];
+		}
+		red = startColor._r + colorDiff._r * (double) totalPixels / range->_pixelCount;
+		green = startColor._g + colorDiff._g * (double) totalPixels / range->_pixelCount;
+		blue = startColor._b + colorDiff._b * (double) totalPixels / range->_pixelCount;
+	}
+	RGB color = RGB ( red, green, blue );
+	pixel.setColor ( color );
+}
+
 int RangeBased::countTotalIterations ( ) {
 	int total = 0;
 	for ( int i = 0; i < _maxIterations; i++ ) {

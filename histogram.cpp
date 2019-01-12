@@ -31,49 +31,38 @@ void Histogram::setColor( RGB color ) {
 	std::cout << "Set color\n";
 }
 
-void Histogram::fillHistogram ( int width, int height, std::vector<Pixel> pixels ) {
-	width = height;
-	height = width; //Usunąć to pózniej, dałem tylko żeby kompilator mordy nie darł
+void Histogram::init ( std::vector<Pixel> &pixels ) {
+	fillHistogram ( pixels );
+}
+
+void Histogram::fillHistogram ( std::vector<Pixel> &pixels ) {
 	for ( Pixel pixel: pixels ) {
 		_histogram[pixel._iterations]++;
 	}
 	std::cout << "Filled histogram with iterations" << "\n";
 }
-
-void Histogram::color ( int width, int height, std::vector<Pixel> &pixels ) {
-	fillHistogram ( width, height, pixels );
+void Histogram::colorPixel ( Pixel &pixel ) {
+	//stub
 	int total = countTotalIterations ();
-	int calculatedProgress = 0;
-	int totalProgress = width * height;
-	for ( int i = 0; i < width; i++ ) {
-		for ( int j = 0; j < height; j++ ) {
-			int iterations = pixels[j * width + i]._iterations;
-			double red{0};
-			double green{0};
-			double blue{0};
-			if ( iterations != _maxIterations ) {
-				double hue = 0;
-				for ( int iter = 0; iter < iterations; iter++ ) {
-					hue += _histogram[iter];
-				}
-				hue /= total;
-				red = _color._r * hue;
-				green = _color._g * hue;
-				blue = _color._b * hue;
-			}
-			RGB color = RGB ( red, green, blue );
-			pixels[j * width + i].setColor ( color );
-			calculatedProgress++;
-			if ( calculatedProgress % ( ( width * height ) / 100 ) == 0 || calculatedProgress == total ) {
-				ColorScheme::printProgress ( ( (double)calculatedProgress / totalProgress ) * 100 );
-			}
+	int iterations = pixel._iterations;
+	double red{0};
+	double green{0};
+	double blue{0};
+	if ( iterations != _maxIterations ) {
+		double hue = 0;
+		for ( int iter = 0; iter < iterations; iter++ ) {
+			hue += _histogram[iter];
 		}
+		hue /= total;
+		red = _color._r * hue;
+		green = _color._g * hue;
+		blue = _color._b * hue;
 	}
-	std::cout << " - done\n";
+	RGB color = RGB ( red, green, blue );
+	pixel.setColor ( color );
 }
 
-Histogram *Histogram::clone()
-{
+Histogram *Histogram::clone () {
 	return new Histogram ( *this );
 }
 
