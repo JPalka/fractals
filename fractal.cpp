@@ -10,7 +10,7 @@ Fractal::Fractal () : _width ( 600 )
 }
 
 void Fractal::printMessage( std::string message ) {
-	std::cout << message << std::endl;
+	std::cout << message;
 }
 
 void Fractal::addZoom ( Zoom zoom ) {
@@ -21,8 +21,7 @@ ColorScheme &Fractal::getColorScheme ( ) {
 	return *_coloringMethod;
 }
 
-void Fractal::save()
-{
+void Fractal::save() {
 	_outputFile.write ( _fractalName + ".bmp", _fractal );
 }
 
@@ -69,9 +68,6 @@ void Fractal::calculateFractal () {
 	int calculated = 0;
 	for ( uint x = 0; x < _width; x++ ) {
 		for ( uint y = 0; y < _height; y++ ) {
-//			std::pair <double, double> coords = _zoomList.doZoom (x, y);
-//			int iterations = this->getIterations ( coords.first, coords.second );
-//			_fractal[y * _width + x]._iterations = iterations;
 			scalePixelCoordinates ( _fractal[y * _width + x], x, y );
 			calculatePixelData ( _fractal[y * _width + x] );
 			calculated++;
@@ -96,5 +92,5 @@ void Fractal::setMaxIterations ( int iterations ) {
 void Fractal::setColorScheme ( ColorScheme &colorScheme ) {
 	_coloringMethod.release ();
 	_coloringMethod = std::unique_ptr<ColorScheme> ( colorScheme.clone () );
-	std::cout << _fractalName << ": " << "Coloring method set.";
+	std::cout << _fractalName << ": " << "Coloring method set.\n";
 }

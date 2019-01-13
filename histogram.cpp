@@ -55,9 +55,9 @@ void Histogram::colorPixel ( Pixel &pixel ) {
 			hue += _histogram[iter];
 		}
 		hue /= total;
-		red = _color._r * hue;
-		green = _color._g * hue;
-		blue = _color._b * hue;
+		red = _color._r * std::pow ( hue, 3 );
+		green = _color._g * std::pow ( hue, 3 );
+		blue = _color._b * std::pow ( hue, 3 );
 	}
 	RGB color = RGB ( red, green, blue );
 	pixel.setColor ( color );

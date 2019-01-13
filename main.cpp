@@ -5,6 +5,8 @@
 #include "zoomlist.h"
 #include "fractal.h"
 #include "newton.h"
+#include "julia.h"
+#include "tricorn.h"
 #include "histogram.h"
 #include "mandelbrot.h"
 #include "rangebased.h"
@@ -23,42 +25,49 @@ int main ( ) {
 //	fractal->colorFractal ();
 //	fractal->_fractalName = "NewtonTest";
 //	fractal->save ();
-	RangeBased range ( 100 );
-	Histogram hist ( 1000, RGB ( 100, 255, 0 ) );
-	Fractal *fractal = new Mandelbrot ( 1000, hist );
-//	fractal->getColorScheme().removeColorRange ( 0.05 );
-//	fractal->getColorScheme().addColorRange ( ColorRange ( 0.05, RGB ( 100, 100, 100 ) ) );
-	fractal->setDimensions ( 800, 600 );
-	fractal->addZoom ( Zoom ( 295, 202, 0.1 ) );
-	fractal->addZoom ( Zoom ( 312, 304, 0.1 ) );
-	auto start = high_resolution_clock::now();
-	fractal->calculateFractal ();
-	auto stop = high_resolution_clock::now();
-	auto duration = duration_cast<seconds>(stop - start);
-	cout << "Calculated fractal in " << duration.count() << " seconds.\n";
-	start = high_resolution_clock::now ();
-	fractal->colorFractal ();
-	stop = high_resolution_clock::now ();
-	duration = duration_cast<seconds>(stop - start);
-	cout << "Colored fractal in " << duration.count() << " seconds.\n";
-	fractal->_fractalName = "TEST10000";
-	fractal->save ();
-	std::cout << "Saved " << fractal->_fractalName << "\n";
-//	fractal->_fractalName = "TEST2000";
-////	fractal->setColorScheme ( range );
-//	fractal->setMaxIterations ( 2000 );
-//	fractal->calculateFractal ();
-//	fractal->colorFractal ();
-//	fractal->save ();
-//	std::cout << "Saved " << fractal->_fractalName << "\n";
+	Histogram hist ( 5000, RGB ( 100, 255, 0 ) );
+	RangeBased range ( 5000 );
+//	Fractal *fractal = new Mandelbrot ( 5000, hist );
+	Fractal *fractalArray[4];
+	fractalArray[0] = new Mandelbrot ( 5000, hist );
+	fractalArray[1] = new Julia ( 5000, hist );
+	fractalArray[2] = new Newton ( 5000, hist );
+	fractalArray[3] = new Tricorn ( 5000, hist );
+	fractalArray[0]->_fractalName = "Mandelbrot5000";
+	fractalArray[1]->_fractalName = "Julia5000";
+	fractalArray[2]->_fractalName = "Newton5000";
+	fractalArray[3]->_fractalName = "Tricorn5000";
 
-//	fractal->setColorScheme ( range );
-//	std::cout << "changed color scheme\n";
-//	fractal->colorFractal ();
-//	fractal->_fractalName = "MandelbrotTestRange";
-//	fractal->save ();
-//	std::cout << "saved second frac\n";
-//	delete fractal;
-	delete fractal;
+	for ( int i = 0; i < 4; i++ ) {
+		fractalArray[i]->setDimensions ( 800, 600 );
+		auto start = high_resolution_clock::now();
+		fractalArray[i]->calculateFractal ();
+		auto stop = high_resolution_clock::now();
+		auto duration = duration_cast<seconds>(stop - start);
+		cout << "Calculated fractal in " << duration.count() << " seconds.\n";
+		start = high_resolution_clock::now ();
+		fractalArray[i]->colorFractal ();
+		stop = high_resolution_clock::now ();
+		duration = duration_cast<seconds>(stop - start);
+		cout << "Colored fractal in " << duration.count() << " seconds.\n";
+		fractalArray[i]->save ();
+		std::cout << "Saved " << fractalArray[i]->_fractalName << "\n";
+	}
+	fractalArray[0]->_fractalName = "Mandelbrot5000RangeBased";
+	fractalArray[1]->_fractalName = "Julia5000RangeBased";
+	fractalArray[2]->_fractalName = "Newton5000RangeBased";
+	fractalArray[3]->_fractalName = "Tricorn5000RangeBased";
+	for ( int i = 0; i < 4; i++ ) {
+		fractalArray[i]->setColorScheme ( range );
+		auto start = high_resolution_clock::now ();
+		fractalArray[i]->colorFractal ();
+		auto stop = high_resolution_clock::now ();
+		auto duration = duration_cast<seconds>(stop - start);
+		cout << "Colored fractal in " << duration.count() << " seconds.\n";
+		fractalArray[i]->save ();
+		std::cout << "Saved " << fractalArray[i]->_fractalName << "\n";
+	}
+//	fractal->addZoom ( Zoom ( 400, 300, 0.1 ) );
+//	fractal->addZoom ( Zoom ( 312, 304, 0.1 ) );
 	return 0;
 }
