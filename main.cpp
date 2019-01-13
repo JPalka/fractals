@@ -67,7 +67,9 @@ int main ( ) {
 		fractalArray[i]->save ();
 		std::cout << "Saved " << fractalArray[i]->_fractalName << "\n";
 	}
-//	fractal->addZoom ( Zoom ( 400, 300, 0.1 ) );
-//	fractal->addZoom ( Zoom ( 312, 304, 0.1 ) );
+	// cleanup
+	for ( int v = 0; v < 4; v++ ) {
+		delete fractalArray[v];
+	}
 	return 0;
 }
